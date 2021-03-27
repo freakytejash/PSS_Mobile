@@ -10,12 +10,9 @@ import com.example.pssmobile.databinding.FragmentLoginBinding
 import com.example.pssmobile.repository.AuthRepository
 import com.example.pssmobile.retrofit.AuthApi
 import com.example.pssmobile.retrofit.Resource
+import com.example.pssmobile.ui.login.*
 import com.example.pssmobile.ui.login.base.BaseFragment
-import com.example.pssmobile.ui.login.enable
-import com.example.pssmobile.ui.login.handleApiError
 import com.example.pssmobile.ui.login.home.HomeActivity
-import com.example.pssmobile.ui.login.startNewActivity
-import com.example.pssmobile.ui.login.visible
 import kotlinx.coroutines.launch
 
 
@@ -36,7 +33,7 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
                         if(it.value.detail.userDataContract.roleId == 1) {
                             requireActivity().startNewActivity(HomeActivity::class.java)
                         } else if(it.value.detail.userDataContract.roleId == 2){
-                            requireActivity().startNewActivity(HomeActivity::class.java)
+                            requireActivity().startNewActivity(ScanNfcTagActivity::class.java)
                         } else if(it.value.detail.userDataContract.roleId == 3){
                             requireActivity().startNewActivity(HomeActivity::class.java)
                         }
