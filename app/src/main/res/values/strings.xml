@@ -22,6 +22,9 @@
 
     <string name="Bureau">Select Bureau</string>
     <string name="SelectJob">Select Job</string>
+    <string name="Address">Address :</string>
+    <string name="Tag_Name">Tag Name :</string>
+    <string name="descriptiom">Description :</string>
     <string name="SelectEntryPoint">Select Entry Point</string>
     <string name="image_permission">You have declined this permission.You must approve this permission in the app settings on your device.</string>
 
