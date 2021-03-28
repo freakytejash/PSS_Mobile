@@ -27,5 +27,9 @@
     <string name="descriptiom">Description :</string>
     <string name="SelectEntryPoint">Select Entry Point</string>
     <string name="image_permission">You have declined this permission.You must approve this permission in the app settings on your device.</string>
+    <string name="Hint_CheckpointName">Checkpoint Name</string>
+    <string name="Hint_Address">Address</string>
+    <string name="Hint_Bureau">Bureau</string>
+    <string name="Hint_CheckpointDes">Checkpoint Description</string>
 
 </resources>

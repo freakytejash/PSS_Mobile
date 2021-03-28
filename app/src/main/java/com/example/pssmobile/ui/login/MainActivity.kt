@@ -1,6 +1,7 @@
 package com.example.pssmobile.ui.login
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
@@ -18,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         val userPreferences = UserPreferences(this)
 
         userPreferences.authToken.asLiveData().observe(this, Observer {
-            val activity = if (it == null) AuthActivity::class.java else HomeActivity::class.java
+          // Change this after implementation of logout
+            val activity = if (it == null) AuthActivity::class.java else AuthActivity::class.java
             startNewActivity(activity)
         })
     }

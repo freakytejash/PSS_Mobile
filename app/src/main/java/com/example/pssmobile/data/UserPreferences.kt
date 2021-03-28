@@ -29,6 +29,17 @@ class UserPreferences(
         }
     }
 
+    val roleId: Flow<Int?>
+        get() = dataStore.data.map { preferences ->
+            preferences[ROLE_ID]
+        }
+
+    suspend fun saveRoleId(roleId: Int) {
+        dataStore.edit { preferences ->
+            preferences[ROLE_ID] = roleId
+        }
+    }
+
     suspend fun clear() {
         dataStore.edit { preferences ->
             preferences.clear()
@@ -37,6 +48,7 @@ class UserPreferences(
 
     companion object {
         private val KEY_AUTH = preferencesKey<String>("key_auth")
+        private val ROLE_ID = preferencesKey<Int>("role_id")
     }
 
 }

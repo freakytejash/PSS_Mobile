@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pssmobile.R
 import com.example.pssmobile.data.model.Getters
+import com.example.pssmobile.ui.login.writer.NFCWriter
 import java.util.*
 
 class ListAdapter(arrayList: ArrayList<Getters>) : RecyclerView.Adapter<ListAdapter.ViewHolder>(), Filterable {
@@ -59,13 +60,13 @@ class ListAdapter(arrayList: ArrayList<Getters>) : RecyclerView.Adapter<ListAdap
             viewHolder.tv_description.text = "None"
         }
         viewHolder.itemView.setOnClickListener { v ->
-           /* val intent = Intent(v.context, NFCWriter::class.java)
-           intent.putExtra("getIDs", (mFilteredList[i] as Getters).iD)
+            val intent = Intent(v.context, NFCWriter::class.java)
+            intent.putExtra("getIDs", (mFilteredList[i] as Getters).iD)
             intent.putExtra("getCheckpoint_Name", (mFilteredList[i] as Getters).checkpoint_Name)
             intent.putExtra("getAddress", (mFilteredList[i] as Getters).address)
             intent.putExtra("getBureau", (mFilteredList[i] as Getters).bureau)
             intent.putExtra("getCheckpoint_description", (mFilteredList[i] as Getters).checkpoint_description)
-            v.context.startActivity(intent)*/
+            v.context.startActivity(intent)
         }
     }
 
@@ -85,9 +86,9 @@ class ListAdapter(arrayList: ArrayList<Getters>) : RecyclerView.Adapter<ListAdap
                     val it: Iterator<*> = mArrayList.iterator()
                     while (it.hasNext()) {
                         val androidVersion: Getters = it.next() as Getters
-                        /*if (androidVersion.checkpoint_Name?.toLowerCase()?.contains(charString) ?: || androidVersion.address?.toLowerCase()?.contains(charString) || androidVersion.bureau.toLowerCase().contains(charString)) {
+                        if (androidVersion.checkpoint_Name?.toLowerCase()?.contains(charString)!! || androidVersion.address?.toLowerCase()?.contains(charString)!! || androidVersion.bureau!!.toLowerCase().contains(charString)) {
                             filteredList.add(androidVersion)
-                        }*/
+                        }
                     }
                     mFilteredList = filteredList
                 }

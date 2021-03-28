@@ -20,4 +20,8 @@ class AuthRepository(
         preferences.saveAuthToken(token)
     }
 
+    suspend fun saveRoleId(roleId: Int){
+        preferences.saveRoleId(roleId)
+    }
+
 }

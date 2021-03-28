@@ -13,6 +13,7 @@ import com.example.pssmobile.retrofit.Resource
 import com.example.pssmobile.ui.login.*
 import com.example.pssmobile.ui.login.base.BaseFragment
 import com.example.pssmobile.ui.login.home.HomeActivity
+import com.example.pssmobile.ui.login.writer.LocationList
 import kotlinx.coroutines.launch
 
 
@@ -31,11 +32,14 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
                     lifecycleScope.launch {
                         viewModel.saveAuthToken(it.value.detail.tockenString!!)
                         if(it.value.detail.userDataContract.roleId == 1) {
+                            viewModel.saveRoleId(it.value.detail.userDataContract.roleId!!)
                             requireActivity().startNewActivity(HomeActivity::class.java)
                         } else if(it.value.detail.userDataContract.roleId == 2){
+                            viewModel.saveRoleId(it.value.detail.userDataContract.roleId!!)
                             requireActivity().startNewActivity(ScanNfcTagActivity::class.java)
                         } else if(it.value.detail.userDataContract.roleId == 3){
-                            requireActivity().startNewActivity(HomeActivity::class.java)
+                            viewModel.saveRoleId(it.value.detail.userDataContract.roleId!!)
+                            requireActivity().startNewActivity(LocationList::class.java)
                         }
                     }
                 }

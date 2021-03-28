@@ -20,6 +20,8 @@
         <activity android:name=".ui.login.auth.AuthActivity" />
         <activity android:name=".ui.login.DetailsFormActivity"/>
         <activity android:name=".ui.login.ScanNfcTagActivity" />
+        <activity android:name=".ui.login.writer.NFCWriter" />
+        <activity android:name=".ui.login.writer.LocationList"/>
         <activity android:name=".ui.login.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
