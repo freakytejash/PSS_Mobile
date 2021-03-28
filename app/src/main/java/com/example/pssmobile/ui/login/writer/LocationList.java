@@ -41,7 +41,7 @@ public class LocationList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.location_list);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         getSupportActionBar().setTitle((CharSequence) "Locations");
@@ -49,9 +49,6 @@ public class LocationList extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         this.context = this;
         tvNFCContent = (EditText) findViewById(R.id.searchText);
-
-        initViews();
-        loadJSON();
         tvNFCContent.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -63,6 +60,9 @@ public class LocationList extends AppCompatActivity {
                 LocationList.this.mAdapter.getFilter().filter(s);
             }
         });
+        initViews();
+        loadJSON();
+
     }
 
     public void onBackPressed() {
@@ -89,9 +89,9 @@ public class LocationList extends AppCompatActivity {
         }).create();
     }
     private void initViews() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.card_recycler_view);
-        //mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView = findViewById(R.id.card_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(LocationList.this));
     }
 
     private void loadJSON() {
