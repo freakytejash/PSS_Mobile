@@ -29,6 +29,17 @@ class UserPreferences(
         }
     }
 
+    val zohoauthToken: Flow<String?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_ZOHO_AUTH]
+        }
+
+    suspend fun saveZohoAuthToken(zohoauthToken: String) {
+        dataStore.edit { preferences ->
+            preferences[KEY_ZOHO_AUTH] = zohoauthToken
+        }
+    }
+
     val roleId: Flow<Int?>
         get() = dataStore.data.map { preferences ->
             preferences[ROLE_ID]
@@ -48,6 +59,7 @@ class UserPreferences(
 
     companion object {
         private val KEY_AUTH = preferencesKey<String>("key_auth")
+        private val KEY_ZOHO_AUTH = preferencesKey<String>("key_zoho_auth")
         private val ROLE_ID = preferencesKey<Int>("role_id")
     }
 

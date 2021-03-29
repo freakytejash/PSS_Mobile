@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_reader"
+    app:startDestination="@id/patrolRunsheetFragment">
+    <fragment
+        android:id="@+id/patrolRunsheetFragment"
+        android:name="com.example.pssmobile.ui.login.reader.PatrolRunsheetFragment"
+        android:label="fragment_patrol_runsheet"
+        tools:layout="@layout/fragment_patrol_runsheet" >
+        <action
+            android:id="@+id/action_patrolRunsheetFragment_to_patrolRunsheetDetailsFragment"
+            app:destination="@id/patrolRunsheetDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patrolRunsheetDetailsFragment"
+        android:name="com.example.pssmobile.ui.login.reader.PatrolRunsheetDetailsFragment"
+        android:label="fragment_patrol_runsheet_details"
+        tools:layout="@layout/fragment_patrol_runsheet_details" >
+        <argument
+            android:name="datamodel"
+            app:argType="Data" />
+    </fragment>
+</navigation>

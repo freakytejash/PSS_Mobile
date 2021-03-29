@@ -13,6 +13,7 @@ import com.example.pssmobile.retrofit.Resource
 import com.example.pssmobile.ui.login.*
 import com.example.pssmobile.ui.login.base.BaseFragment
 import com.example.pssmobile.ui.login.home.HomeActivity
+import com.example.pssmobile.ui.login.reader.ScanNfcTagActivity
 import com.example.pssmobile.ui.login.writer.LocationList
 import kotlinx.coroutines.launch
 
