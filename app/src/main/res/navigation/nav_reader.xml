@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/patrolRunsheetFragment"
         android:name="com.example.pssmobile.ui.login.reader.PatrolRunsheetFragment"
-        android:label="fragment_patrol_runsheet"
+        android:label="Patrol Runsheet"
         tools:layout="@layout/fragment_patrol_runsheet" >
         <action
             android:id="@+id/action_patrolRunsheetFragment_to_patrolRunsheetDetailsFragment"
@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/patrolRunsheetDetailsFragment"
         android:name="com.example.pssmobile.ui.login.reader.PatrolRunsheetDetailsFragment"
-        android:label="fragment_patrol_runsheet_details"
+        android:label="Details"
         tools:layout="@layout/fragment_patrol_runsheet_details" >
         <argument
             android:name="datamodel"

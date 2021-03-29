@@ -1,22 +1,25 @@
 package com.example.pssmobile.ui.login.reader
 
-import Data
+import com.example.pssmobile.R
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
 import androidx.navigation.fragment.navArgs
 import com.example.pssmobile.databinding.FragmentPatrolRunsheetDetailsBinding
 import com.example.pssmobile.repository.ZohoRepository
 import com.example.pssmobile.retrofit.ZohoApi
+import com.example.pssmobile.ui.login.DetailsFormActivity
 import com.example.pssmobile.ui.login.base.BaseFragment
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
+import com.example.pssmobile.ui.login.home.HomeActivity
+import com.example.pssmobile.ui.login.startNewActivity
 
 
 class PatrolRunsheetDetailsFragment :  BaseFragment<ZohoViewModel, FragmentPatrolRunsheetDetailsBinding, ZohoRepository>() {
     val args: PatrolRunsheetDetailsFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -32,6 +35,22 @@ class PatrolRunsheetDetailsFragment :  BaseFragment<ZohoViewModel, FragmentPatro
         binding.tvAllocatedTo.text = model.allocated_to.display_value
         binding.tvDateCompleted.text = model.date_time_job_completed
         binding.tvPatrolOfficer.text = model.patrol_Officer
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_edit ->{
+                requireActivity().startNewActivity(DetailsFormActivity::class.java)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun getViewModel() = ZohoViewModel::class.java
