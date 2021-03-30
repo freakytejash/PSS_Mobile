@@ -10,4 +10,9 @@
         android:name="com.example.pssmobile.ui.login.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/addUser"
+        android:name="com.example.pssmobile.ui.login.home.AddUser"
+        android:label="fragment_add_user"
+        tools:layout="@layout/fragment_add_user" />
 </navigation>

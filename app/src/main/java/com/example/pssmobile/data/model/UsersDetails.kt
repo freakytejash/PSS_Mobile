@@ -12,6 +12,7 @@ data class UsersDetails (
 	@SerializedName("Password") val password : String,
 	@SerializedName("IsAdmin") val isAdmin : Boolean,
 	@SerializedName("ZohoCreatorUserName") val zohoCreatorUserName : String,
+	@SerializedName("ZohoCreatorUserId") val zohoCreatorUserId : String,
 	@SerializedName("ImageData") val imageData : String,
 	@SerializedName("ProfileImageName") val profileImageName : String,
 	@SerializedName("IsActive") val isActive : Boolean,

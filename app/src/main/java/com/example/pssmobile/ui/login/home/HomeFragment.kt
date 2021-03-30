@@ -1,29 +1,27 @@
 package com.example.pssmobile.ui.login.home
 
 import UsersDetails
+import android.R
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pssmobile.adapter.UserAdapter
-import com.example.pssmobile.data.model.Detail
-import com.example.pssmobile.data.model.User
 import com.example.pssmobile.databinding.FragmentHomeBinding
-import com.example.pssmobile.databinding.FragmentPatrolRunsheetBinding
 import com.example.pssmobile.repository.UserListRepository
-import com.example.pssmobile.repository.UserRepository
 import com.example.pssmobile.retrofit.GetUsersApi
 import com.example.pssmobile.retrofit.Resource
-import com.example.pssmobile.retrofit.UserApi
 import com.example.pssmobile.ui.login.base.BaseFragment
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
-import java.util.ArrayList
+import com.example.pssmobile.ui.login.handleApiError
+import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.*
 
 
 class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserListRepository>() {
@@ -38,7 +36,7 @@ class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserLi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.progressbar.visibility = View.VISIBLE
-        viewModel.getUserData()
+        viewModel.getUserData("2")
 
         viewModel.userData.observe(viewLifecycleOwner, Observer {
             Log.d("App", "Users List" + it.toString())
@@ -62,8 +60,15 @@ class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserLi
                     binding.rvUserlist.adapter = userAdapter
                     binding.rvUserlist.setHasFixedSize(true)
                 }
+                is Resource.Failure -> handleApiError(it) {
+                    it.errorBody
+                }
             }
         })
+
+        binding.btnAdd.setOnClickListener{
+            //Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_addUser);
+        }
     }
 
     override fun getViewModel(): Class<UserListViewModel> = UserListViewModel::class.java

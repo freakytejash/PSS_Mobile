@@ -55,7 +55,7 @@
     </TableLayout>-->
 
     <Button
-        android:id="@+id/button_logout"
+        android:id="@+id/btn_add"
         style="@style/ButtonPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,8 @@
         android:id="@+id/rv_userlist"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/button_logout"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/btn_add"
         android:layout_height="match_parent" />
 
     <ProgressBar
@@ -78,3 +79,4 @@
         android:layout_height="wrap_content" />
 
 </RelativeLayout>
+

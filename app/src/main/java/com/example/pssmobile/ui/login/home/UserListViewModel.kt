@@ -15,7 +15,7 @@ class UserListViewModel(private val repository: UserListRepository) : BaseViewMo
     val userData: LiveData<Resource<UserList>>
         get() = userdataList
 
-    fun getUserData() = viewModelScope.launch {
-        userdataList.value = repository.getUserListData()
+    fun getUserData(roleId: String) = viewModelScope.launch {
+        userdataList.value = repository.getUserListData(roleId)
     }
 }

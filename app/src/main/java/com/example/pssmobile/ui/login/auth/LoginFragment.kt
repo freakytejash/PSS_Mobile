@@ -34,7 +34,10 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
                 is Resource.Success -> {
                     lifecycleScope.launch {
                         viewModel.saveAuthToken(it.value.detail.tockenString!!)
-                        Singleton.zohoCreatorUserId = it.value.detail.userDataContract.zohoCreatorUserId
+                        if(it.value.detail.userDataContract.zohoCreatorUserId!=null) {
+                            Singleton.zohoCreatorUserId =
+                                it.value.detail.userDataContract.zohoCreatorUserId
+                        }
                         if(it.value.detail.userDataContract.roleId == 1) {
                             viewModel.saveRoleId(it.value.detail.userDataContract.roleId!!)
                             requireActivity().startNewActivity(HomeActivity::class.java)
