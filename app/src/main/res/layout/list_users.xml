@@ -55,7 +55,7 @@
         tools:layout_editor_absoluteX="59dp" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/iv_editUser"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginBottom="48dp"

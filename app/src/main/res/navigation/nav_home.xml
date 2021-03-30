@@ -9,10 +9,21 @@
         android:id="@+id/homeFragment"
         android:name="com.example.pssmobile.ui.login.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_addUser"
+            app:destination="@id/addUser" />
+    </fragment>
     <fragment
         android:id="@+id/addUser"
         android:name="com.example.pssmobile.ui.login.home.AddUser"
         android:label="fragment_add_user"
-        tools:layout="@layout/fragment_add_user" />
+        tools:layout="@layout/fragment_add_user" >
+        <argument
+            android:name="userDetailsModel"
+            app:argType="UsersDetails" />
+        <action
+            android:id="@+id/action_addUser_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

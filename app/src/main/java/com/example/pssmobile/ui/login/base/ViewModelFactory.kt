@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.pssmobile.repository.*
 import com.example.pssmobile.ui.login.auth.AuthViewModel
+import com.example.pssmobile.ui.login.home.AddEditUserViewModel
 import com.example.pssmobile.ui.login.home.HomeViewModel
 import com.example.pssmobile.ui.login.home.UserListViewModel
 import com.example.pssmobile.ui.login.reader.ReaderViewModel
@@ -22,6 +23,7 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(ReaderViewModel::class.java) -> ReaderViewModel(repository as ReaderRepository) as T
             modelClass.isAssignableFrom(ZohoViewModel::class.java) -> ZohoViewModel(repository as ZohoRepository) as T
             modelClass.isAssignableFrom(UserListViewModel::class.java) -> UserListViewModel(repository as UserListRepository) as T
+            modelClass.isAssignableFrom(AddEditUserViewModel::class.java) -> AddEditUserViewModel(repository as AddEditUserRepository) as T
             else -> throw IllegalArgumentException("ViewModelClass Not Found")
         }
     }

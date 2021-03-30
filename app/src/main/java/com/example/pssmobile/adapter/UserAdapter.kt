@@ -5,12 +5,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pssmobile.R
+import com.example.pssmobile.ui.login.home.HomeFragmentDirections
 import com.example.pssmobile.ui.login.reader.PatrolRunsheetFragmentDirections
 import java.util.ArrayList
 
@@ -29,10 +31,13 @@ class UserAdapter(
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val model = dataList[position]
         holder.bind(model)
-        holder.itemLayout.setOnClickListener {
-           /* val action: NavDirections = PatrolRunsheetFragmentDirections.actionPatrolRunsheetFragmentToPatrolRunsheetDetailsFragment(model)
-            Navigation.findNavController(it).navigate(action)*/
+        holder.iv_editUser.setOnClickListener {
+            val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToAddUser(model)
+            Navigation.findNavController(it).navigate(action)
         }
+        /*holder.itemLayout.setOnClickListener {
+
+        }*/
     }
 
     override fun getItemCount(): Int {
@@ -44,6 +49,7 @@ class UserAdapter(
         val user_name: TextView = view.findViewById(R.id.user_name)
         val phone_no: TextView = view.findViewById(R.id.phone_no)
         val zoho_id: TextView = view.findViewById(R.id.zoho_id)
+        val iv_editUser: ImageView = view.findViewById(R.id.iv_editUser)
 
         fun bind(user: UsersDetails){
             user_name.text = user.name
