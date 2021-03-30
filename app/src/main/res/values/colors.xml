@@ -12,7 +12,7 @@
     <color name="colorPrimary">#2e87eb</color>
     <color name="colorPrimaryDark">#2464AC</color>
     <color name="colorAccent">#2e87eb</color>
-
+    <color name="light_blue">#d9e0eb</color>
     <color name="colorTextDefault">#131313</color>
     <color name="colorTextLabelDefault">#353535</color>
     <color name="colorTextHintDefault">#434343</color>

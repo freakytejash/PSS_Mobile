@@ -31,5 +31,6 @@
     <string name="Hint_Address">Address</string>
     <string name="Hint_Bureau">Bureau</string>
     <string name="Hint_CheckpointDes">Checkpoint Description</string>
+    <string name="add_user">Add User</string>
 
 </resources>

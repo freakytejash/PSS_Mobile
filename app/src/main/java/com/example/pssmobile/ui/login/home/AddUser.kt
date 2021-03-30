@@ -1,32 +1,42 @@
 package com.example.pssmobile.ui.login.home
 
+import UserList
 import UsersDetails
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pssmobile.R
+import com.example.pssmobile.adapter.DailyRunsheetAdapter
 import com.example.pssmobile.adapter.UserAdapter
-import com.example.pssmobile.data.model.Detail
-import com.example.pssmobile.data.model.User
 import com.example.pssmobile.databinding.FragmentHomeBinding
 import com.example.pssmobile.databinding.FragmentPatrolRunsheetBinding
 import com.example.pssmobile.repository.UserListRepository
-import com.example.pssmobile.repository.UserRepository
+import com.example.pssmobile.repository.ZohoRepository
 import com.example.pssmobile.retrofit.GetUsersApi
 import com.example.pssmobile.retrofit.Resource
-import com.example.pssmobile.retrofit.UserApi
+import com.example.pssmobile.retrofit.ZohoApi
 import com.example.pssmobile.ui.login.base.BaseFragment
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import com.example.pssmobile.ui.login.reader.ZohoViewModel
 import java.util.ArrayList
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
-class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserListRepository>() {
+/**
+ * A simple [Fragment] subclass.
+ * Use the [AddUser.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class AddUser : BaseFragment<UserListViewModel, FragmentHomeBinding, UserListRepository>() {
     private lateinit var mContext: Context
     private lateinit var userAdapter: UserAdapter
 
@@ -38,7 +48,7 @@ class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserLi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.progressbar.visibility = View.VISIBLE
-        viewModel.getUserData()
+        //viewModel.getDailyRunsheetData("3354762000000189027")
 
         viewModel.userData.observe(viewLifecycleOwner, Observer {
             Log.d("App", "Users List" + it.toString())
@@ -75,48 +85,4 @@ class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserLi
 
     override fun getFragmentRepository() =
         UserListRepository(remoteDataSource.buildApi(GetUsersApi::class.java))
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        //binding.progressbar.visible(false)
-
-        viewModel.getUser()
-
-        viewModel.user.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Resource.Success -> {
-                    //binding.progressbar.visible(false)
-                    updateUI(it.value.detail)
-                }
-                is Resource.Loading -> {
-                   // binding.progressbar.visible(true)
-                }
-            }
-        })
-
-        *//*binding.buttonLogout.setOnClickListener {
-            logout()
-        }*//*
-    }
-
-    private fun updateUI(user: Detail) {
-        with(binding) {
-            //textViewId.text = user.id.toString()
-            //textViewName.text = user.name
-            //textViewEmail.text = user.email
-        }
-    }
-
-    override fun getViewModel() = HomeViewModel::class.java
-
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ) = FragmentHomeBinding.inflate(inflater, container, false)
-
-    override fun getFragmentRepository(): UserRepository {
-        val token = runBlocking { userPreferences.authToken.first() }
-        val api = remoteDataSource.buildApi(UserApi::class.java, token)
-        return UserRepository(api)
-    }*/
 }

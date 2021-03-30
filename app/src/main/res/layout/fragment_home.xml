@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.home.HomeFragment">
 
-    <TableLayout
+    <!--<TableLayout
         android:id="@+id/table"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
@@ -52,17 +52,24 @@
 
         </TableRow>
 
-    </TableLayout>
+    </TableLayout>-->
 
     <Button
         android:id="@+id/button_logout"
         style="@style/ButtonPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/table"
-        android:layout_centerHorizontal="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="12dp"
-        android:text="Logout" />
+        android:text="@string/add_user" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_userlist"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/button_logout"
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:layout_centerInParent="true"
