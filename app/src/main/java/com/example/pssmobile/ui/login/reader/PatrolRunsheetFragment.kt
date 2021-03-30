@@ -16,6 +16,7 @@ import com.example.pssmobile.repository.ZohoRepository
 import com.example.pssmobile.retrofit.Resource
 import com.example.pssmobile.retrofit.ZohoApi
 import com.example.pssmobile.ui.login.base.BaseFragment
+import com.example.pssmobile.utils.Singleton
 import java.util.ArrayList
 
 class PatrolRunsheetFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunsheetBinding, ZohoRepository>() {
@@ -30,7 +31,7 @@ class PatrolRunsheetFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunshee
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.progressbar.visibility = View.VISIBLE
-        viewModel.getDailyRunsheetData("3354762000000189027")
+        viewModel.getDailyRunsheetData(Singleton.zohoCreatorUserId)
 
         viewModel.dailyRunsheetData.observe(viewLifecycleOwner, Observer {
             Log.d("App", "Daily Runsheet Response" + it.toString())

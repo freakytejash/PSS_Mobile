@@ -15,6 +15,8 @@ import com.example.pssmobile.ui.login.base.BaseFragment
 import com.example.pssmobile.ui.login.home.HomeActivity
 import com.example.pssmobile.ui.login.reader.ScanNfcTagActivity
 import com.example.pssmobile.ui.login.writer.LocationList
+import com.example.pssmobile.utils.Singleton
+import com.google.gson.annotations.Since
 import kotlinx.coroutines.launch
 
 
@@ -32,6 +34,7 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
                 is Resource.Success -> {
                     lifecycleScope.launch {
                         viewModel.saveAuthToken(it.value.detail.tockenString!!)
+                        Singleton.zohoCreatorUserId = it.value.detail.userDataContract.zohoCreatorUserId
                         if(it.value.detail.userDataContract.roleId == 1) {
                             viewModel.saveRoleId(it.value.detail.userDataContract.roleId!!)
                             requireActivity().startNewActivity(HomeActivity::class.java)

@@ -12,6 +12,7 @@ data class UserDataContract (
 		@SerializedName("LastLogin") val lastLogin : String,
 		@SerializedName("Password") val password : String,
 		@SerializedName("IsAdmin") val isAdmin : Boolean,
+		@SerializedName("ZohoCreatorUserId") val zohoCreatorUserId : String,
 		@SerializedName("ImageData") val imageData : String,
 		@SerializedName("ProfileImageName") val profileImageName : String,
 		@SerializedName("IsActive") val isActive : Boolean,
