@@ -21,5 +21,16 @@
         <argument
             android:name="datamodel"
             app:argType="Data" />
+        <action
+            android:id="@+id/action_patrolRunsheetDetailsFragment_to_patrolRunsheetEntryEditFragment"
+            app:destination="@id/patrolRunsheetEntryEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patrolRunsheetEntryEditFragment"
+        android:name="com.example.pssmobile.ui.login.reader.PatrolRunsheetEntryEditFragment"
+        android:label="PatrolRunsheetEntryEditFragment" >
+        <argument
+            android:name="dataModel"
+            app:argType="Data" />
     </fragment>
 </navigation>

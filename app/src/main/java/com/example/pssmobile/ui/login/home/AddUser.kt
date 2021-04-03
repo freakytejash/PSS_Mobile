@@ -75,14 +75,14 @@ class AddUser : BaseFragment<AddEditUserViewModel, FragmentAddUserBinding, AddEd
                 Toast.makeText(mContext, "Please check the Terms and conditions", Toast.LENGTH_SHORT).show()
             }else{
                 progressBar.visibility = View.VISIBLE
-                userDetailsModel.name = binding.etPersonName.text.toString()
-                userDetailsModel.phone = binding.etPhone.text.toString().toDouble()
-                userDetailsModel.email = binding.etEmailAddress.text.toString()
-                userDetailsModel.password = binding.etPassword.text.toString()
-                userDetailsModel.zohoCreatorUserName = binding.etPersonUserName.text.toString()
-                userDetailsModel.zohoCreatorUserId = binding.etZohoCreatorUserId.text.toString()
+                userDetailsModel?.name  = binding.etPersonName.text.toString()
+                userDetailsModel?.phone = binding.etPhone.text.toString().toDouble()
+                userDetailsModel?.email = binding.etEmailAddress.text.toString()
+                userDetailsModel?.password = binding.etPassword.text.toString()
+                userDetailsModel?.zohoCreatorUserName = binding.etPersonUserName.text.toString()
+                userDetailsModel?.zohoCreatorUserId = binding.etZohoCreatorUserId.text.toString()
 
-                viewModel.addEditUser(userDetailsModel)
+                viewModel.addEditUser(userDetailsModel!!)
             }
         }
 
