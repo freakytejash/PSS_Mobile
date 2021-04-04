@@ -66,6 +66,8 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         val model = args.dataModel
         Log.d("App","Data model in patrol edit: " + model.toString())
 
+        binding.etJobnamelocation.setText(model.select_a_job1.display_value)
+        binding.etLocation.setText(model.location1)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // FROM_HTML_MODE_LEGACY is the behaviour that was used for versions below android N
             // we are using this flag to give a consistent behaviour
@@ -73,6 +75,11 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         } else {
             et_jobdescription.setText(Html.fromHtml(model.job_description))
         }
+        binding.etStartdatetime.setText(model.start_date_time)
+        binding.etEnddatetime.setText(model.end_date_time)
+        binding.etJobtype.setText(model.job_type)
+        binding.etJobcompletiondatetime.setText(model.date_time_job_completed)
+        binding.etPatrolofficer.setText(model.patrol_Officer)
 
         binding.etPicturesection.setOnClickListener {
             if (imageFileList.size >= 4) {
