@@ -53,7 +53,7 @@ class UserAdapter(
 
         fun bind(user: UsersDetails){
             user_name.text = user.name
-            //phone_no.text = user.phone
+            phone_no.text = "Contact No: "+user.phone.toString()
             zoho_id.text = user.zohoCreatorUserName
         }
     }

@@ -1,40 +1,27 @@
 package com.example.pssmobile.ui.login.home
 
-import UserList
 import UsersDetails
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pssmobile.R
-import com.example.pssmobile.adapter.DailyRunsheetAdapter
-import com.example.pssmobile.adapter.UserAdapter
 import com.example.pssmobile.databinding.FragmentAddUserBinding
-import com.example.pssmobile.databinding.FragmentHomeBinding
-import com.example.pssmobile.databinding.FragmentPatrolRunsheetBinding
 import com.example.pssmobile.repository.AddEditUserRepository
-import com.example.pssmobile.repository.UserListRepository
-import com.example.pssmobile.repository.ZohoRepository
 import com.example.pssmobile.retrofit.AddEditUserApi
-import com.example.pssmobile.retrofit.GetUsersApi
 import com.example.pssmobile.retrofit.Resource
-import com.example.pssmobile.retrofit.ZohoApi
 import com.example.pssmobile.ui.login.base.BaseFragment
 import com.example.pssmobile.ui.login.handleApiError
-import com.example.pssmobile.ui.login.reader.PatrolRunsheetDetailsFragmentArgs
-import com.example.pssmobile.ui.login.reader.ZohoViewModel
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.fragment_add_user.*
-import java.util.ArrayList
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,11 +47,19 @@ class AddUser : BaseFragment<AddEditUserViewModel, FragmentAddUserBinding, AddEd
         var userDetailsModel = args.userDetailsModel
 
         if (userDetailsModel != null){
-            binding.etPersonName.setText(userDetailsModel.name)
-            binding.etPhone.setText(userDetailsModel.phone.toString())
-            binding.etEmailAddress.setText(userDetailsModel.email)
+            if(userDetailsModel.name.isNotEmpty()) {
+                binding.etPersonName.setText(userDetailsModel.name)
+            }
+            if(userDetailsModel.phone.isNotEmpty()) {
+                binding.etPhone.setText(userDetailsModel.phone.toString())
+            }
+            if(userDetailsModel.email.isNotEmpty()) {
+                binding.etEmailAddress.setText(userDetailsModel.email)
+            }
             binding.etPassword.setText(userDetailsModel.password)
-            binding.etPersonUserName.setText(userDetailsModel.zohoCreatorUserName)
+            if(userDetailsModel.zohoCreatorUserName.isNotEmpty()) {
+                binding.etPersonUserName.setText(userDetailsModel.zohoCreatorUserName)
+            }
             if(userDetailsModel.zohoCreatorUserId.isNotEmpty()){
                 binding.etZohoCreatorUserId.setText(userDetailsModel.zohoCreatorUserId)
             }
@@ -74,27 +69,46 @@ class AddUser : BaseFragment<AddEditUserViewModel, FragmentAddUserBinding, AddEd
             if(!binding.checkBox.isChecked){
                 Toast.makeText(mContext, "Please check the Terms and conditions", Toast.LENGTH_SHORT).show()
             }else{
-                progressBar.visibility = View.VISIBLE
+                /*progressBar.visibility = View.VISIBLE
                 userDetailsModel?.name  = binding.etPersonName.text.toString()
-                userDetailsModel?.phone = binding.etPhone.text.toString().toDouble()
+                userDetailsModel?.phone = binding.etPhone.text.toString()
                 userDetailsModel?.email = binding.etEmailAddress.text.toString()
                 userDetailsModel?.password = binding.etPassword.text.toString()
                 userDetailsModel?.zohoCreatorUserName = binding.etPersonUserName.text.toString()
                 userDetailsModel?.zohoCreatorUserId = binding.etZohoCreatorUserId.text.toString()
 
-                viewModel.addEditUser(userDetailsModel!!)
+                viewModel.addEditUser(userDetailsModel!!)*/
+                if (userDetailsModel != null) {
+                    userDetailsModel.name = binding.etPersonName.text.toString()
+                    userDetailsModel.phone = binding.etPhone.text.toString()
+                    userDetailsModel.email = binding.etEmailAddress.text.toString()
+                    userDetailsModel.password = binding.etPassword.text.toString()
+                    userDetailsModel.zohoCreatorUserName = binding.etPersonUserName.text.toString()
+                    userDetailsModel.zohoCreatorUserId = binding.etZohoCreatorUserId.text.toString()
+                    viewModel.addEditUser(userDetailsModel)
+                } else {
+
+                    val currentTime: Date = Calendar.getInstance().getTime()
+                    val usersDetails = UsersDetails(0, binding.etPersonName.text.toString(), binding.etPhone.text.toString(), binding.etEmailAddress.text.toString(), 2,
+                            currentTime.toString(),binding.etPassword.text.toString(),false,binding.etPersonUserName.text.toString(),binding.etZohoCreatorUserId.text.toString(),
+                            "","",true,currentTime.toString(),currentTime.toString(),"Admin","Admin","Admin")
+
+
+                        viewModel.addEditUser(usersDetails)
+
+                }
             }
         }
 
         viewModel.addEditUserResponse.observe(viewLifecycleOwner, Observer {
-            Log.d("App","Edit user response: " + it.toString())
+            Log.d("App", "Edit user response: " + it.toString())
             progressBar.visibility = View.GONE
             when (it) {
                 is Resource.Success -> {
-                    if (it.value.message.equals("Success")){
+                    if (it.value.message.equals("Success")) {
                         val action: NavDirections = AddUserDirections.actionAddUserToHomeFragment()
                         view?.let { it1 -> Navigation.findNavController(it1).navigate(action) }
-                    }else{
+                    } else {
                         Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -112,8 +126,8 @@ class AddUser : BaseFragment<AddEditUserViewModel, FragmentAddUserBinding, AddEd
     override fun getViewModel(): Class<AddEditUserViewModel> = AddEditUserViewModel::class.java
 
     override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
+            inflater: LayoutInflater,
+            container: ViewGroup?
     )= FragmentAddUserBinding.inflate(inflater, container, false)
 
     override fun getFragmentRepository() =

@@ -8,16 +8,22 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.pssmobile.ui.login.home.HomeFragment"
-        android:label="fragment_home"
+        android:label="Reader User List"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_addUser"
+            app:destination="@id/addUser" />
+        <action
+            android:id="@+id/action_homeFragment_to_addUser3"
+            app:destination="@id/addUser" />
+        <action
+            android:id="@+id/action_homeFragment_to_addUser4"
             app:destination="@id/addUser" />
     </fragment>
     <fragment
         android:id="@+id/addUser"
         android:name="com.example.pssmobile.ui.login.home.AddUser"
-        android:label="fragment_add_user"
+        android:label="Add/Edit User"
         tools:layout="@layout/fragment_add_user" >
         <argument
             android:name="userDetailsModel"

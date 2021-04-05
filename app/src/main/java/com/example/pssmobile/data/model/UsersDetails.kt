@@ -5,9 +5,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UsersDetails (
 
-		@SerializedName("UserId") val userId : Int,
+		@SerializedName("UserId") var userId : Int,
 		@SerializedName("Name") var name : String,
-		@SerializedName("Phone") var phone : Double,
+		@SerializedName("Phone") var phone : String,
 		@SerializedName("Email") var email : String,
 		@SerializedName("RoleId") val roleId : Int,
 		@SerializedName("LastLogin") val lastLogin : String,

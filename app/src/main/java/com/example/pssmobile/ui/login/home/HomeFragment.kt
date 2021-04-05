@@ -8,8 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,14 +31,23 @@ import java.util.*
 class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserListRepository>() {
     private lateinit var mContext: Context
     private lateinit var userAdapter: UserAdapter
+    //var navc: NavController ? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
     }
 
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navc = Navigation.findNavController(view)
+
+    }*/
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         binding.progressbar.visibility = View.VISIBLE
         viewModel.getUserData("2")
 
@@ -46,15 +59,15 @@ class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserLi
                     val dataList = it.value.detail
 
                     binding.rvUserlist.layoutManager = LinearLayoutManager(
-                        mContext,
-                        LinearLayoutManager.VERTICAL,
-                        false
+                            mContext,
+                            LinearLayoutManager.VERTICAL,
+                            false
                     )
                     binding.rvUserlist.addItemDecoration(
-                        DividerItemDecoration(
-                            binding.rvUserlist.context,
-                            DividerItemDecoration.VERTICAL
-                        )
+                            DividerItemDecoration(
+                                    binding.rvUserlist.context,
+                                    DividerItemDecoration.VERTICAL
+                            )
                     )
                     userAdapter = UserAdapter(mContext, dataList as ArrayList<UsersDetails>)
                     binding.rvUserlist.adapter = userAdapter
@@ -66,20 +79,30 @@ class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserLi
             }
         })
 
-        binding.btnAdd.setOnClickListener{
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnAdd.setOnClickListener {
             //Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_addUser);
+            val action: NavDirections = HomeFragmentDirections.actionHomeFragmentToAddUser4()
+            view?.let { it1 -> Navigation.findNavController(it1).navigate(action) }
+            //Toast.makeText(mContext, "Coming soon...", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun getViewModel(): Class<UserListViewModel> = UserListViewModel::class.java
 
     override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    )= FragmentHomeBinding.inflate(inflater, container, false)
+            inflater: LayoutInflater,
+            container: ViewGroup?
+    ) = FragmentHomeBinding.inflate(inflater, container, false)
 
     override fun getFragmentRepository() =
-        UserListRepository(remoteDataSource.buildApi(GetUsersApi::class.java))
+            UserListRepository(remoteDataSource.buildApi(GetUsersApi::class.java))
+}
     /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -124,4 +147,3 @@ class HomeFragment : BaseFragment<UserListViewModel, FragmentHomeBinding, UserLi
         val api = remoteDataSource.buildApi(UserApi::class.java, token)
         return UserRepository(api)
     }*/
-}
