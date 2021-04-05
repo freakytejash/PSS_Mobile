@@ -6,6 +6,7 @@ import android.content.ClipData
 import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -18,7 +19,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.text.HtmlCompat
@@ -47,12 +48,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunsheetEntryEditBinding, ZohoRepository>() {
+class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunsheetEntryEditBinding, ZohoRepository>(), AdapterView.OnItemSelectedListener {
 
     private lateinit var mPhotoFile: File
     private lateinit var mCompressor: FileCompressor
     private lateinit var imageGridAdapter: ImageGridAdapter
     private var imageFileList: ArrayList<File> = ArrayList()
+    private var jobResultsValues: ArrayList<String> = ArrayList()
+    private var incidentTypesValues: ArrayList<String> = ArrayList()
+    private var severityValues: ArrayList<String> = ArrayList()
     val args: PatrolRunsheetEntryEditFragmentArgs by navArgs()
 
     companion object {
@@ -64,7 +68,7 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         super.onActivityCreated(savedInstanceState)
         mCompressor = FileCompressor(requireContext())
         val model = args.dataModel
-        Log.d("App","Data model in patrol edit: " + model.toString())
+        Log.d("App", "Data model in patrol edit: " + model.toString())
 
         binding.etJobnamelocation.setText(model.select_a_job1.display_value)
         binding.etLocation.setText(model.location1)
@@ -84,14 +88,133 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         binding.etPicturesection.setOnClickListener {
             if (imageFileList.size >= 4) {
                 Toast.makeText(requireContext(), "You have already selected 4 images", Toast.LENGTH_SHORT)
-                    .show()
-            }else{
+                        .show()
+            } else {
                 selectImage()
+            }
+        }
+
+        binding.spJobResults.onItemSelectedListener = this
+        binding.spIncidentType.onItemSelectedListener = this
+        binding.spSeverity.onItemSelectedListener = this
+
+        /*jobResultsValues = arrayListOf<String>("Nothing to report - all good", "I need to report an incident", "Lock/Unlock job",
+                "Escort details", "Random patrol with pictures")
+        incidentTypesValues = arrayListOf<String>("Break in (incident)","Property damage (incident)", "Person on site (incident)",
+                "Violent behaviour (incident)", "Medical condition (incident)", "Other (describe in comments)")
+        severityValues = arrayListOf("High","Medium","Low")
+
+        val ad_jobresults: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), android.R.layout.simple_spinner_item, jobResultsValues as List<Any?>)
+        ad_jobresults.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spJobResults.adapter = ad_jobresults
+
+        val ad_incidentTypes: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), android.R.layout.simple_spinner_item, incidentTypesValues as List<Any?>)
+        ad_incidentTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spIncidentType.adapter = ad_incidentTypes
+
+        val ad_severity: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), android.R.layout.simple_spinner_item, severityValues as List<Any?>)
+        ad_severity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spSeverity.adapter = ad_severity*/
+
+        val jobResultsValues = resources.getStringArray(R.array.jobResults_array)
+        val ad_jobresults: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), android.R.layout.simple_spinner_item, jobResultsValues)
+        ad_jobresults.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spJobResults.adapter = ad_jobresults
+
+        val incidentTypesValues = resources.getStringArray(R.array.incidentTypes_array)
+        val ad_incidentType= object : ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item, incidentTypesValues) {
+
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be use for hint
+                return position != 0
+            }
+
+            override fun getDropDownView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup
+            ): View {
+                val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if(position == 0) {
+                    view.setTextColor(Color.GRAY)
+                } else {
+                    //here is it possible to define color for other items by
+                    view.setTextColor(Color.BLACK)
+                }
+                return view
+            }
+        }
+        ad_incidentType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spIncidentType.adapter = ad_incidentType
+
+        val severityValues = resources.getStringArray(R.array.severity_array)
+        val ad_severity= object : ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item, severityValues) {
+
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be use for hint
+                return position != 0
+            }
+
+            override fun getDropDownView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup
+            ): View {
+                val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if(position == 0) {
+                    view.setTextColor(Color.GRAY)
+                } else {
+                    //here is it possible to define color for other items by
+                    view.setTextColor(Color.BLACK)
+                }
+                return view
+            }
+        }
+        ad_severity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spSeverity.adapter = ad_severity
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (parent?.id) {
+            R.id.sp_jobResults -> {
+                val value = parent.getItemAtPosition(position)
+                Toast.makeText(requireContext(), "Selected result ${value}", Toast.LENGTH_SHORT).show()
+                if (position == 1){
+                    binding.llSpinnerLayout.visibility = View.VISIBLE
+                }else{
+                    binding.llSpinnerLayout.visibility = View.GONE
+                }
+
+                if (position == 0){
+                    binding.llPictureSection.visibility = View.GONE
+                }else{
+                    binding.llPictureSection.visibility = View.VISIBLE
+                }
+            }
+            R.id.sp_incidentType ->{
+                val value = parent.getItemAtPosition(position).toString()
+                if(position == 0){
+                    (view as TextView).setTextColor(Color.GRAY)
+                }
+            }
+            R.id.sp_severity ->{
+                val value = parent.getItemAtPosition(position).toString()
+                if(position == 0){
+                    (view as TextView).setTextColor(Color.GRAY)
+                }
             }
         }
     }
 
-    private fun setImageGridAdapter(imageList: ArrayList<File>){
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+
+    private fun setImageGridAdapter(imageList: ArrayList<File>) {
         binding.gvSelectedImages.layoutManager = GridLayoutManager(requireContext(), 4, GridLayoutManager.VERTICAL, false)
         imageGridAdapter = ImageGridAdapter(requireContext(), imageList)
         binding.gvSelectedImages.adapter = imageGridAdapter
@@ -304,9 +427,9 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
 
     override fun getViewModel() = ZohoViewModel::class.java
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?)
-            = FragmentPatrolRunsheetEntryEditBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPatrolRunsheetEntryEditBinding.inflate(inflater, container, false)
 
     override fun getFragmentRepository() =
             ZohoRepository(remoteDataSource.buildApi(ZohoApi::class.java))
+
 }

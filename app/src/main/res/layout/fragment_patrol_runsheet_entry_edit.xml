@@ -334,7 +334,17 @@
                         android:layout_marginTop="16dp"
                         android:text="Job Results" />
 
-                    <EditText
+                    <Spinner
+                        android:id="@+id/sp_jobResults"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="5dp"
+                        android:spinnerMode="dropdown"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+                    <!--<EditText
                         android:id="@+id/et_jobResults"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -342,7 +352,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
-                        android:hint="Job results" />
+                        android:hint="Job results" />-->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -350,6 +360,51 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
                         android:text="Choose the best option to enter the job results." />
+
+                    <LinearLayout
+                        android:id="@+id/ll_spinnerLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextLabelDefault"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Select the incident type" />
+
+                        <Spinner
+                            android:id="@+id/sp_incidentType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="5dp"
+                            android:spinnerMode="dropdown"
+                            style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+                        <TextView
+                            style="@style/TextLabelDefault"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Severity" />
+
+                        <Spinner
+                            android:id="@+id/sp_severity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="5dp"
+                            android:spinnerMode="dropdown"
+                            style="@style/Widget.AppCompat.Spinner.Underlined"/>
+                    </LinearLayout>
 
                     <TextView
                         style="@style/TextLabelDefault"
@@ -377,38 +432,45 @@
                         android:layout_marginLeft="16dp"
                         android:text="Comments are mandatory if you report and incident." />
 
-                    <TextView
-                        style="@style/TextLabelDefault"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
-                        android:text="Pictures Section" />
-
-                    <EditText
-                        android:id="@+id/et_picturesection"
+                    <LinearLayout
+                        android:id="@+id/ll_pictureSection"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        android:focusable="false"
-                        android:hint="Tap to add a new entry"
-                        android:inputType="none" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:text="Please add as many pictures as you need." />
+                        <TextView
+                            style="@style/TextLabelDefault"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Pictures Section" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/gv_SelectedImages"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        <EditText
+                            android:id="@+id/et_picturesection"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            android:focusable="false"
+                            android:hint="Tap to add a new entry"
+                            android:inputType="none" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:text="Please add as many pictures as you need." />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/gv_SelectedImages"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"

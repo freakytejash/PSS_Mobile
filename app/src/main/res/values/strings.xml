@@ -33,4 +33,29 @@
     <string name="Hint_CheckpointDes">Checkpoint Description</string>
     <string name="add_user">Add User</string>
 
+    <string-array name="jobResults_array">
+        <item>Nothing to report - all good</item>
+        <item>I need to report an incident</item>
+        <item>Lock/Unlock job</item>
+        <item>Escort details</item>
+        <item>Random patrol with pictures</item>
+    </string-array>
+
+    <string-array name="incidentTypes_array">
+        <item>-Select-</item>
+        <item>Break in (incident)</item>
+        <item>Property damage (incident)</item>
+        <item>Person on site (incident)</item>
+        <item>Violent behaviour (incident)</item>
+        <item>Medical condition (incident)</item>
+        <item>Other (describe in comments)</item>
+    </string-array>
+
+    <string-array name="severity_array">
+        <item>-Select-</item>
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
+
 </resources>
