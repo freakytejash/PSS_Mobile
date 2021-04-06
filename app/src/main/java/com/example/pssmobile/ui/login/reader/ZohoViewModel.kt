@@ -1,6 +1,8 @@
 package com.example.pssmobile.ui.login.reader
 
 import RunsheetModel
+import UpdateJobRequestModel
+import UpdateJobResponse
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -20,7 +22,14 @@ class ZohoViewModel(private val repository: ZohoRepository) : BaseViewModel(repo
     fun getDailyRunsheetData(userId: String) = viewModelScope.launch {
         _zohodailyRunsheet.value = repository.getDailyRunsheetData(userId)
     }
+    
+    private val _updateJobResponse : MutableLiveData<Resource<UpdateJobResponse>> = MutableLiveData()
+    val updateJobResponse : LiveData<Resource<UpdateJobResponse>>
+        get() = _updateJobResponse
 
+    fun updateDailyRunsheetJob(updateJobRequestModel: UpdateJobRequestModel) = viewModelScope.launch {
+        _updateJobResponse.value = repository.updateDailyRunsheetJob(updateJobRequestModel)
+    }
     /*suspend fun saveZohoAuthToken(zohotoken: String) {
         repository.saveZohoAuthToken(zohotoken)
     }*/

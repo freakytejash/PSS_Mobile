@@ -32,5 +32,8 @@
         <argument
             android:name="dataModel"
             app:argType="Data" />
+        <action
+            android:id="@+id/action_patrolRunsheetEntryEditFragment_to_patrolRunsheetFragment"
+            app:destination="@id/patrolRunsheetFragment" />
     </fragment>
 </navigation>

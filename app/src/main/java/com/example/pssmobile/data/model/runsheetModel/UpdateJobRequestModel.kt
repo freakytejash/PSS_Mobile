@@ -1,0 +1,37 @@
+import com.google.gson.annotations.SerializedName
+
+data class UpdateJobRequestModel (
+
+		@SerializedName("select_a_job1") val select_a_job1 : String,
+		@SerializedName("location1") val location1 : String,
+		@SerializedName("address") val address : String,
+		@SerializedName("day_due") val day_due : String,
+		@SerializedName("job_description") val job_description : String,
+		@SerializedName("job_date") val job_date : String,
+		@SerializedName("start_date_time") val start_date_time : String,
+		@SerializedName("end_date_time") val end_date_time : String,
+		@SerializedName("start_time") val start_time : String,
+		@SerializedName("end_time") val end_time : String,
+		@SerializedName("job_type") val job_type : String,
+		@SerializedName("allocated_to") val allocated_to : String,
+		@SerializedName("active") val active : Boolean,
+		@SerializedName("job_closed") val job_closed : Boolean,
+		@SerializedName("checkpoint_ID2") val checkpoint_ID2 : List<String>,
+		@SerializedName("how_many_checkpoints") val how_many_checkpoints : String,
+		@SerializedName("checkpoints") val checkpoints : String,
+		@SerializedName("keys_status") val keys_statuss_status : String,
+		@SerializedName("date_time_job_completed") val date_time_job_completed : String,
+		@SerializedName("patrol_Officer") val patrol_Officer : String,
+		@SerializedName("quick_Comment") val quick_Comment : String,
+		@SerializedName("what_do_you_need_to_report") val what_do_you_need_to_report : String,
+		@SerializedName("type_of_incident") val type_of_incident : String,
+		@SerializedName("comments") val comments : String,
+		@SerializedName("severity") val severity : String,
+		@SerializedName("steid") val steid : String,
+		@SerializedName("stebrief") val stebrief : Stebrief,
+		@SerializedName("pictures_Section") val pictures_Section : List<Pictures_Section>,
+		@SerializedName("evidence_1") val evidence_1 : String,
+		@SerializedName("evidence_2") val evidence_2 : String,
+		@SerializedName("evidence_3") val evidence_3 : String,
+		@SerializedName("id") val id : String
+)

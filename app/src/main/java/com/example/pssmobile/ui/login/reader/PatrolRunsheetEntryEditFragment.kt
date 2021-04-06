@@ -1,11 +1,19 @@
 package com.example.pssmobile.ui.login.reader
 
+import Data
+import Pictures_Section
+import Stebrief
+import UpdateJobRequestModel
 import android.Manifest
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.ClipData
 import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -14,6 +22,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import android.text.Html
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,21 +52,34 @@ import com.karumi.dexter.listener.DexterError
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.fragment_patrol_runsheet_entry_edit.*
+import okhttp3.internal.wait
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.util.Base64
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import com.example.pssmobile.retrofit.Resource
+import com.example.pssmobile.ui.login.handleApiError
+import com.example.pssmobile.ui.login.home.AddUserDirections
+import java.io.ByteArrayOutputStream
 
 class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunsheetEntryEditBinding, ZohoRepository>(), AdapterView.OnItemSelectedListener {
 
     private lateinit var mPhotoFile: File
     private lateinit var mCompressor: FileCompressor
     private lateinit var imageGridAdapter: ImageGridAdapter
+    private lateinit var model: Data
+    private var isJobClosed: Boolean = false
     private var imageFileList: ArrayList<File> = ArrayList()
     private var jobResultsValues: ArrayList<String> = ArrayList()
     private var incidentTypesValues: ArrayList<String> = ArrayList()
     private var severityValues: ArrayList<String> = ArrayList()
+    private var selectedJobResult: String = ""
+    private var selectedincidentType: String = ""
+    private var selectedseverity: String = ""
     val args: PatrolRunsheetEntryEditFragmentArgs by navArgs()
 
     companion object {
@@ -67,7 +90,7 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mCompressor = FileCompressor(requireContext())
-        val model = args.dataModel
+        model = args.dataModel
         Log.d("App", "Data model in patrol edit: " + model.toString())
 
         binding.etJobnamelocation.setText(model.select_a_job1.display_value)
@@ -176,42 +199,167 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         }
         ad_severity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spSeverity.adapter = ad_severity
+        binding.switchJobclosed.setOnCheckedChangeListener(null)
+        binding.switchJobclosed.isChecked = model.job_closed.toBoolean()
+        binding.switchJobclosed.setOnCheckedChangeListener({_, isChecked ->
+            isJobClosed = isChecked
+            //Toast.makeText(requireContext(), "Job closed status is ${isChecked}", Toast.LENGTH_SHORT).show()
+        })
+        btn_update.setOnClickListener {
+            binding.progressBarupdate.visibility = View.VISIBLE
+            updateDailyRunsheetJob()
+        }
+
+        viewModel.updateJobResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            Log.d("App", "Update job response " + it.toString())
+            binding.progressBarupdate.visibility = View.GONE
+            when (it) {
+                is Resource.Success -> {
+                    if (it.value.message.equals("Success")) {
+                        val action: NavDirections = PatrolRunsheetEntryEditFragmentDirections.actionPatrolRunsheetEntryEditFragmentToPatrolRunsheetFragment()
+                        view?.let { it1 -> Navigation.findNavController(it1).navigate(action) }
+                    } else {
+                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Resource.Failure -> handleApiError(it) {
+                    Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun updateDailyRunsheetJob() {
+        val selectajob1 = model.select_a_job1.iD
+        val location1 = model.location1
+        val address = ""
+        val daydue = model.day_due
+        val jobdescription  = binding.etJobdescription.text.toString()
+        val jobDate = model.job_date
+        val startdatetime = model.start_date_time
+        val enddatetime = model.end_date_time
+        val startTime = ""
+        val endTime = ""
+        val jobType = model.job_type
+        val allocatedTo = model.allocated_to.iD
+        val active = model.active
+        val jobClosed = isJobClosed
+        val checkpointId2: List<String> = ArrayList()
+        val howmanyCheckpoints = binding.etCheckpointcount.text.toString()
+        val checkpoints = model.checkpoints
+        val keystatus = ""
+        val datetimejobcompleted = binding.etJobcompletiondatetime.text.toString()
+        val patrolofficer = model.patrol_Officer
+        val quickcomment = ""
+        val whatdoyouneedtoreport = selectedJobResult
+        val typeofincident = selectedincidentType
+        val comments = binding.etComments.text.toString()
+        val severity = selectedseverity
+        val steid = ""
+        val stebrief:Stebrief = Stebrief(binding.etStebrief.text.toString())
+        val evidence1 = model.evidence_1
+        val evidence2 = model.evidence_2
+        val evidence3 = model.evidence_3
+        val id = model.iD
+
+        val imageStringList: ArrayList<String> = ArrayList()
+        if(imageFileList.isNotEmpty()){
+            for (item in imageFileList){
+                val bytes = item.readBytes()
+                /*val filepath: String = item.path
+                val bitmap: Bitmap = BitmapFactory.decodeFile(filepath)
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()*/
+                val imageString: String = Base64.encodeToString(bytes, Base64.DEFAULT)
+                imageStringList.add(imageString)
+            }
+        }
+
+        var picturesSectionList: ArrayList<Pictures_Section> = ArrayList()
+        for (item in imageStringList){
+            val picturesSection: Pictures_Section = Pictures_Section(item,"","")
+            picturesSectionList.add(picturesSection)
+        }
+
+        var jobRequestModel: UpdateJobRequestModel = UpdateJobRequestModel(selectajob1, location1, address, daydue, jobdescription, jobDate, startdatetime, enddatetime,
+            startTime, endTime, jobType, allocatedTo, active.toBoolean(), jobClosed, checkpointId2, howmanyCheckpoints, checkpoints, keystatus, datetimejobcompleted, patrolofficer,
+            quickcomment, whatdoyouneedtoreport, typeofincident, comments, severity, steid, stebrief, picturesSectionList, evidence1, evidence2, evidence3, id)
+
+        viewModel.updateDailyRunsheetJob(jobRequestModel)
+        //Log.d("App","Image string list: " + imageStringList.toString())
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent?.id) {
             R.id.sp_jobResults -> {
                 val value = parent.getItemAtPosition(position)
-                Toast.makeText(requireContext(), "Selected result ${value}", Toast.LENGTH_SHORT).show()
+                selectedJobResult = value as String
+                //Toast.makeText(requireContext(), "Selected result ${value}", Toast.LENGTH_SHORT).show()
                 if (position == 1){
                     binding.llSpinnerLayout.visibility = View.VISIBLE
                 }else{
+                    //In case of other selected job results except: I need to report an incident
+                    //reset other spinners incidenttype and severity to initial state
                     binding.llSpinnerLayout.visibility = View.GONE
+                    sp_incidentType.setSelection(0)
+                    sp_severity.setSelection(0)
+                    selectedincidentType = ""
+                    selectedseverity = ""
                 }
 
                 if (position == 0){
                     binding.llPictureSection.visibility = View.GONE
+                    imageFileList.clear()
+                    setImageGridAdapter(imageFileList)
                 }else{
                     binding.llPictureSection.visibility = View.VISIBLE
                 }
             }
             R.id.sp_incidentType ->{
                 val value = parent.getItemAtPosition(position).toString()
+                selectedincidentType = value
                 if(position == 0){
                     (view as TextView).setTextColor(Color.GRAY)
                 }
             }
             R.id.sp_severity ->{
                 val value = parent.getItemAtPosition(position).toString()
+                selectedseverity = value
                 if(position == 0){
                     (view as TextView).setTextColor(Color.GRAY)
                 }
             }
         }
+
+        binding.etJobcompletiondatetime.setOnClickListener {
+            pickDateTime()
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("Not yet implemented")
+    }
+
+    private fun pickDateTime() {
+        val currentDateTime = Calendar.getInstance()
+        val startYear = currentDateTime.get(Calendar.YEAR)
+        val startMonth = currentDateTime.get(Calendar.MONTH)
+        val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
+        val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
+        val startMinute = currentDateTime.get(Calendar.MINUTE)
+
+        DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            TimePickerDialog(requireContext(), TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                val pickedDateTime = Calendar.getInstance()
+                pickedDateTime.set(year, month, day, hour, minute)
+
+                val myFormat = "dd/MM/yyyy HH:mm:ss" // mention the format you need
+                val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
+                binding.etJobcompletiondatetime.setText(sdf.format(pickedDateTime.time))
+
+            }, startHour, startMinute, true).show()
+        }, startYear, startMonth, startDay).show()
     }
 
     private fun setImageGridAdapter(imageList: ArrayList<File>) {
