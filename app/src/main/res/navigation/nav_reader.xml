@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_patrolRunsheetFragment_to_patrolRunsheetDetailsFragment"
             app:destination="@id/patrolRunsheetDetailsFragment" />
+        <action
+            android:id="@+id/action_patrolRunsheetFragment_to_patrolRunsheetEntryEditFragment2"
+            app:destination="@id/patrolRunsheetEntryEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/patrolRunsheetDetailsFragment"

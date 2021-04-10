@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.DetailsFormActivity">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+
     <EditText
         android:id="@+id/et_scanCheckpoint"
         android:layout_width="0dp"
@@ -102,5 +107,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_choseImage" />
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

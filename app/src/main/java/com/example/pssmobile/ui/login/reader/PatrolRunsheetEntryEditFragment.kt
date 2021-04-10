@@ -11,21 +11,20 @@ import android.app.TimePickerDialog
 import android.content.ClipData
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.nfc.Tag
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.provider.Settings
 import android.text.Html
-import android.util.Base64.DEFAULT
-import android.util.Base64.encodeToString
+import android.util.Base64
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,17 +32,20 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.text.HtmlCompat
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pssmobile.BuildConfig
 import com.example.pssmobile.R
 import com.example.pssmobile.adapter.ImageGridAdapter
-import com.example.pssmobile.databinding.FragmentPatrolRunsheetDetailsBinding
 import com.example.pssmobile.databinding.FragmentPatrolRunsheetEntryEditBinding
 import com.example.pssmobile.repository.ZohoRepository
+import com.example.pssmobile.retrofit.Resource
 import com.example.pssmobile.retrofit.ZohoApi
 import com.example.pssmobile.ui.login.DetailsFormActivity
 import com.example.pssmobile.ui.login.base.BaseFragment
+import com.example.pssmobile.ui.login.handleApiError
 import com.example.pssmobile.utils.FileCompressor
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -52,19 +54,11 @@ import com.karumi.dexter.listener.DexterError
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.fragment_patrol_runsheet_entry_edit.*
-import okhttp3.internal.wait
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import android.util.Base64
-import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
-import com.example.pssmobile.retrofit.Resource
-import com.example.pssmobile.ui.login.handleApiError
-import com.example.pssmobile.ui.login.home.AddUserDirections
-import java.io.ByteArrayOutputStream
 
 class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunsheetEntryEditBinding, ZohoRepository>(), AdapterView.OnItemSelectedListener {
 
@@ -98,7 +92,12 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // FROM_HTML_MODE_LEGACY is the behaviour that was used for versions below android N
             // we are using this flag to give a consistent behaviour
-            et_jobdescription.setText(Html.fromHtml(model.job_description, HtmlCompat.FROM_HTML_MODE_LEGACY))
+            et_jobdescription.setText(
+                Html.fromHtml(
+                    model.job_description,
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+            )
         } else {
             et_jobdescription.setText(Html.fromHtml(model.job_description))
         }
@@ -110,7 +109,11 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
 
         binding.etPicturesection.setOnClickListener {
             if (imageFileList.size >= 4) {
-                Toast.makeText(requireContext(), "You have already selected 4 images", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    requireContext(),
+                    "You have already selected 4 images",
+                    Toast.LENGTH_SHORT
+                )
                         .show()
             } else {
                 selectImage()
@@ -140,12 +143,20 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         binding.spSeverity.adapter = ad_severity*/
 
         val jobResultsValues = resources.getStringArray(R.array.jobResults_array)
-        val ad_jobresults: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), android.R.layout.simple_spinner_item, jobResultsValues)
+        val ad_jobresults: ArrayAdapter<*> = ArrayAdapter<Any?>(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            jobResultsValues
+        )
         ad_jobresults.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spJobResults.adapter = ad_jobresults
 
         val incidentTypesValues = resources.getStringArray(R.array.incidentTypes_array)
-        val ad_incidentType= object : ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item, incidentTypesValues) {
+        val ad_incidentType= object : ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            incidentTypesValues
+        ) {
 
             override fun isEnabled(position: Int): Boolean {
                 // Disable the first item from Spinner
@@ -154,9 +165,9 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
             }
 
             override fun getDropDownView(
-                    position: Int,
-                    convertView: View?,
-                    parent: ViewGroup
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
             ): View {
                 val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
                 //set the color of first item in the drop down list to gray
@@ -173,7 +184,11 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         binding.spIncidentType.adapter = ad_incidentType
 
         val severityValues = resources.getStringArray(R.array.severity_array)
-        val ad_severity= object : ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item, severityValues) {
+        val ad_severity= object : ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            severityValues
+        ) {
 
             override fun isEnabled(position: Int): Boolean {
                 // Disable the first item from Spinner
@@ -182,9 +197,9 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
             }
 
             override fun getDropDownView(
-                    position: Int,
-                    convertView: View?,
-                    parent: ViewGroup
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
             ): View {
                 val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
                 //set the color of first item in the drop down list to gray
@@ -201,7 +216,7 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         binding.spSeverity.adapter = ad_severity
         binding.switchJobclosed.setOnCheckedChangeListener(null)
         binding.switchJobclosed.isChecked = model.job_closed.toBoolean()
-        binding.switchJobclosed.setOnCheckedChangeListener({_, isChecked ->
+        binding.switchJobclosed.setOnCheckedChangeListener({ _, isChecked ->
             isJobClosed = isChecked
             //Toast.makeText(requireContext(), "Job closed status is ${isChecked}", Toast.LENGTH_SHORT).show()
         })
@@ -216,14 +231,17 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
             when (it) {
                 is Resource.Success -> {
                     if (it.value.message.equals("Success")) {
-                        val action: NavDirections = PatrolRunsheetEntryEditFragmentDirections.actionPatrolRunsheetEntryEditFragmentToPatrolRunsheetFragment()
+                        val action: NavDirections =
+                            PatrolRunsheetEntryEditFragmentDirections.actionPatrolRunsheetEntryEditFragmentToPatrolRunsheetFragment()
                         view?.let { it1 -> Navigation.findNavController(it1).navigate(action) }
                     } else {
-                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
                 is Resource.Failure -> handleApiError(it) {
-                    Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
@@ -278,13 +296,44 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
 
         var picturesSectionList: ArrayList<Pictures_Section> = ArrayList()
         for (item in imageStringList){
-            val picturesSection: Pictures_Section = Pictures_Section(item,"","")
+            val picturesSection: Pictures_Section = Pictures_Section(item, "", "")
             picturesSectionList.add(picturesSection)
         }
 
-        var jobRequestModel: UpdateJobRequestModel = UpdateJobRequestModel(selectajob1, location1, address, daydue, jobdescription, jobDate, startdatetime, enddatetime,
-            startTime, endTime, jobType, allocatedTo, active.toBoolean(), jobClosed, checkpointId2, howmanyCheckpoints, checkpoints, keystatus, datetimejobcompleted, patrolofficer,
-            quickcomment, whatdoyouneedtoreport, typeofincident, comments, severity, steid, stebrief, picturesSectionList, evidence1, evidence2, evidence3, id)
+        var jobRequestModel: UpdateJobRequestModel = UpdateJobRequestModel(
+            selectajob1,
+            location1,
+            address,
+            daydue,
+            jobdescription,
+            jobDate,
+            startdatetime,
+            enddatetime,
+            startTime,
+            endTime,
+            jobType,
+            allocatedTo,
+            active.toBoolean(),
+            jobClosed,
+            checkpointId2,
+            howmanyCheckpoints,
+            checkpoints,
+            keystatus,
+            datetimejobcompleted,
+            patrolofficer,
+            quickcomment,
+            whatdoyouneedtoreport,
+            typeofincident,
+            comments,
+            severity,
+            steid,
+            stebrief,
+            picturesSectionList,
+            evidence1,
+            evidence2,
+            evidence3,
+            id
+        )
 
         viewModel.updateDailyRunsheetJob(jobRequestModel)
         //Log.d("App","Image string list: " + imageStringList.toString())
@@ -296,9 +345,9 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
                 val value = parent.getItemAtPosition(position)
                 selectedJobResult = value as String
                 //Toast.makeText(requireContext(), "Selected result ${value}", Toast.LENGTH_SHORT).show()
-                if (position == 1){
+                if (position == 1) {
                     binding.llSpinnerLayout.visibility = View.VISIBLE
-                }else{
+                } else {
                     //In case of other selected job results except: I need to report an incident
                     //reset other spinners incidenttype and severity to initial state
                     binding.llSpinnerLayout.visibility = View.GONE
@@ -308,25 +357,25 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
                     selectedseverity = ""
                 }
 
-                if (position == 0){
+                if (position == 0) {
                     binding.llPictureSection.visibility = View.GONE
                     imageFileList.clear()
                     setImageGridAdapter(imageFileList)
-                }else{
+                } else {
                     binding.llPictureSection.visibility = View.VISIBLE
                 }
             }
-            R.id.sp_incidentType ->{
+            R.id.sp_incidentType -> {
                 val value = parent.getItemAtPosition(position).toString()
                 selectedincidentType = value
-                if(position == 0){
+                if (position == 0) {
                     (view as TextView).setTextColor(Color.GRAY)
                 }
             }
-            R.id.sp_severity ->{
+            R.id.sp_severity -> {
                 val value = parent.getItemAtPosition(position).toString()
                 selectedseverity = value
-                if(position == 0){
+                if (position == 0) {
                     (view as TextView).setTextColor(Color.GRAY)
                 }
             }
@@ -349,21 +398,38 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
         val startMinute = currentDateTime.get(Calendar.MINUTE)
 
-        DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            TimePickerDialog(requireContext(), TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-                val pickedDateTime = Calendar.getInstance()
-                pickedDateTime.set(year, month, day, hour, minute)
+        DatePickerDialog(
+            requireContext(),
+            DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                TimePickerDialog(
+                    requireContext(),
+                    TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                        val pickedDateTime = Calendar.getInstance()
+                        pickedDateTime.set(year, month, day, hour, minute)
 
-                val myFormat = "dd/MM/yyyy HH:mm:ss" // mention the format you need
-                val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
-                binding.etJobcompletiondatetime.setText(sdf.format(pickedDateTime.time))
+                        val myFormat = "dd/MM/yyyy HH:mm:ss" // mention the format you need
+                        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
+                        binding.etJobcompletiondatetime.setText(sdf.format(pickedDateTime.time))
 
-            }, startHour, startMinute, true).show()
-        }, startYear, startMonth, startDay).show()
+                    },
+                    startHour,
+                    startMinute,
+                    true
+                ).show()
+            },
+            startYear,
+            startMonth,
+            startDay
+        ).show()
     }
 
     private fun setImageGridAdapter(imageList: ArrayList<File>) {
-        binding.gvSelectedImages.layoutManager = GridLayoutManager(requireContext(), 4, GridLayoutManager.VERTICAL, false)
+        binding.gvSelectedImages.layoutManager = GridLayoutManager(
+            requireContext(),
+            4,
+            GridLayoutManager.VERTICAL,
+            false
+        )
         imageGridAdapter = ImageGridAdapter(requireContext(), imageList)
         binding.gvSelectedImages.adapter = imageGridAdapter
         binding.gvSelectedImages.setHasFixedSize(true)
@@ -371,7 +437,7 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
 
     private fun selectImage() {
         val items = arrayOf<CharSequence>(
-                "Take Photo", "Choose from Gallery", "Cancel"
+            "Take Photo", "Choose from Gallery", "Cancel"
         )
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Choose Image")
@@ -389,9 +455,9 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
 
     private fun requestStoragePermission(isCamera: Boolean) {
         Dexter.withContext(requireContext()).withPermissions(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
         )
                 .withListener(object : MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport) {
@@ -411,16 +477,16 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
                     }
 
                     override fun onPermissionRationaleShouldBeShown(
-                            permissions: List<PermissionRequest>,
-                            token: PermissionToken
+                        permissions: List<PermissionRequest>,
+                        token: PermissionToken
                     ) {
                         token.continuePermissionRequest()
                     }
                 }).withErrorListener { error: DexterError? ->
                     Toast.makeText(
-                            requireContext(),
-                            "Error occurred! ",
-                            Toast.LENGTH_SHORT
+                        requireContext(),
+                        "Error occurred! ",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 .onSameThread()
@@ -443,14 +509,14 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
             }
             if (photoFile != null) {
                 val photoURI: Uri = FileProvider.getUriForFile(
-                        requireContext(), BuildConfig.APPLICATION_ID.toString() + ".provider",
-                        photoFile
+                    requireContext(), BuildConfig.APPLICATION_ID.toString() + ".provider",
+                    photoFile
                 )
                 mPhotoFile = photoFile
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(
-                        takePictureIntent,
-                        DetailsFormActivity.REQUEST_TAKE_PHOTO
+                    takePictureIntent,
+                    DetailsFormActivity.REQUEST_TAKE_PHOTO
                 )
             }
         }
@@ -470,14 +536,14 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
      */
     private fun dispatchGalleryIntent() {
         val pickPhoto = Intent(
-                Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
         pickPhoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         pickPhoto.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         startActivityForResult(
-                pickPhoto,
-                DetailsFormActivity.REQUEST_GALLERY_PHOTO
+            pickPhoto,
+            DetailsFormActivity.REQUEST_GALLERY_PHOTO
         )
     }
 
@@ -503,16 +569,32 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
                 val clipData: ClipData? = data?.clipData
 
                 if (clipData?.itemCount!! > 4) {
-                    Toast.makeText(requireContext(), "Please select maximum 4 images only", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        requireContext(),
+                        "Please select maximum 4 images only",
+                        Toast.LENGTH_SHORT
+                    )
                             .show()
                 } else {
                     if ((imageFileList.size + clipData.itemCount) > 4) {
-                        Toast.makeText(requireContext(), "Please select maximum 4 images only", Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            requireContext(),
+                            "Please select maximum 4 images only",
+                            Toast.LENGTH_SHORT
+                        )
                                 .show()
                     } else {
                         for (i in 0 until clipData.itemCount) {
                             try {
-                                val imageUri = mCompressor.compressToFile(File(getRealPathFromUri(clipData.getItemAt(i).uri)))
+                                val imageUri = mCompressor.compressToFile(
+                                    File(
+                                        getRealPathFromUri(
+                                            clipData.getItemAt(
+                                                i
+                                            ).uri
+                                        )
+                                    )
+                                )
                                 imageFileList.add(imageUri)
                             } catch (e: IOException) {
                                 e.printStackTrace()
@@ -540,7 +622,7 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
             openSettings()
         }
         builder.setNegativeButton(
-                "Cancel"
+            "Cancel"
         ) { dialog: DialogInterface, which: Int -> dialog.cancel() }
         builder.show()
     }
@@ -573,9 +655,14 @@ class PatrolRunsheetEntryEditFragment : BaseFragment<ZohoViewModel, FragmentPatr
         }
     }
 
+
     override fun getViewModel() = ZohoViewModel::class.java
 
-    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPatrolRunsheetEntryEditBinding.inflate(inflater, container, false)
+    override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentPatrolRunsheetEntryEditBinding.inflate(
+        inflater,
+        container,
+        false
+    )
 
     override fun getFragmentRepository() =
             ZohoRepository(remoteDataSource.buildApi(ZohoApi::class.java))

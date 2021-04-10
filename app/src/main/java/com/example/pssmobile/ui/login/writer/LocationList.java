@@ -3,13 +3,17 @@ package com.example.pssmobile.ui.login.writer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +25,8 @@ import com.example.pssmobile.data.model.Getters;
 import com.example.pssmobile.data.model.WriterResponse;
 import com.example.pssmobile.retrofit.WriterAPI;
 import com.example.pssmobile.ui.login.MainActivity;
+import com.example.pssmobile.ui.login.reader.ScanNfcFragment;
+import com.example.pssmobile.ui.login.reader.ScanNfcTagActivity;
 import com.example.pssmobile.ui.login.writer.adapter.ListAdapter;
 
 import retrofit2.Call;
@@ -100,6 +106,7 @@ public class LocationList extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(LocationList.this));
     }
 
+
     private void loadJSON() {
         progressDialog.setMessage("Please Wait");
         progressDialog.show();
@@ -117,4 +124,20 @@ public class LocationList extends AppCompatActivity {
             }
         });
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_site,menu);
+        menu.removeItem(R.id.action_add);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    /*public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+            R.id.action_add
+                Toast.makeText(getApplicationContext(),"Item 1 Selected",Toast.LENGTH_LONG).show();
+                return true;
+
+}*/
 }

@@ -13,6 +13,7 @@ import com.example.pssmobile.retrofit.Resource
 import com.example.pssmobile.ui.login.*
 import com.example.pssmobile.ui.login.base.BaseFragment
 import com.example.pssmobile.ui.login.home.HomeActivity
+import com.example.pssmobile.ui.login.reader.ReadNFC
 import com.example.pssmobile.ui.login.reader.ScanNfcTagActivity
 import com.example.pssmobile.ui.login.writer.LocationList
 import com.example.pssmobile.utils.Singleton
@@ -43,7 +44,7 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
                             requireActivity().startNewActivity(HomeActivity::class.java)
                         } else if(it.value.detail.userDataContract.roleId == 2){
                             viewModel.saveRoleId(it.value.detail.userDataContract.roleId!!)
-                            requireActivity().startNewActivity(ScanNfcTagActivity::class.java)
+                            requireActivity().startNewActivity(ReadNFC::class.java)
                         } else if(it.value.detail.userDataContract.roleId == 3){
                             viewModel.saveRoleId(it.value.detail.userDataContract.roleId!!)
                             requireActivity().startNewActivity(LocationList::class.java)

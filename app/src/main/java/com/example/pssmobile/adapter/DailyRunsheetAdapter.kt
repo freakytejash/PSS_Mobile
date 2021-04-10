@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pssmobile.R
 import com.example.pssmobile.ui.login.reader.PatrolRunsheetFragmentDirections
+import kotlinx.android.synthetic.main.item_dailyrunsheet.view.*
 import java.util.ArrayList
 
 class DailyRunsheetAdapter(
@@ -31,6 +32,11 @@ class DailyRunsheetAdapter(
         holder.bind(model)
         holder.itemLayout.setOnClickListener {
             val action:NavDirections = PatrolRunsheetFragmentDirections.actionPatrolRunsheetFragmentToPatrolRunsheetDetailsFragment(model)
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        holder.itemLayout.edit_details.setOnClickListener{
+            val action:NavDirections = PatrolRunsheetFragmentDirections.actionPatrolRunsheetFragmentToPatrolRunsheetEntryEditFragment2(model)
             Navigation.findNavController(it).navigate(action)
         }
     }
