@@ -17,8 +17,7 @@
         android:layout_marginRight="10dp"
         android:hint="Search"
         android:singleLine="true"
-        android:text=""
-         />
+        android:text=""/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,4 +35,10 @@
             android:scrollbars="vertical"
             />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>
