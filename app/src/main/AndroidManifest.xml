@@ -33,6 +33,7 @@
         <activity android:name=".ui.login.writer.LocationList" />
         <activity android:name=".ui.login.MainActivity"/>
         <activity android:name=".ui.login.reader.ReadNFC"/>
+        <activity android:name=".ui.login.writer.AddSiteActivity"/>
         <activity android:name=".Database.listDataActivity"/>
 
         <provider
