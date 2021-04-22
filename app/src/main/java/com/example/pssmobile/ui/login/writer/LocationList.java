@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -70,7 +71,7 @@ public class LocationList extends AppCompatActivity {
             }
 
             public void afterTextChanged(Editable s) {
-                //LocationList.this.mAdapter.getFilter().filter(s);
+                LocationList.this.mAdapter.getFilter().filter(s);
             }
         });
         initViews();
@@ -99,15 +100,15 @@ public class LocationList extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.action_add)
+         if (item.getItemId() == R.id.action_add)
         {
-            Intent intent = new Intent(LocationList.this, AddSiteActivity.class);
-            startActivity(intent);
+          Intent intent = new Intent(LocationList.this, AddSiteActivity.class);
+          startActivity(intent);
         }
-        else if (item.getItemId() != 16908332) {
-            return super.onOptionsItemSelected(item);
-        }
-        //onBackPressed();
+         else if (item.getItemId() != 16908332) {
+             return super.onOptionsItemSelected(item);
+         }
+//        onBackPressed();
         return true;
     }
 
@@ -148,15 +149,15 @@ public class LocationList extends AppCompatActivity {
         });
     }
 
-    /*    @Override
-        public void onCreateOptionsMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            super.onCreateContextMenu(menu, v, menuInfo);
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.menu_add_site, menu);
-        }*/
+/*    @Override
+    public void onCreateOptionsMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_add_site, menu);
+    }*/
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_site,menu);
-        // menu.removeItem(R.id.action_add);
+       // menu.removeItem(R.id.action_add);
         return super.onCreateOptionsMenu(menu);
     }
 
