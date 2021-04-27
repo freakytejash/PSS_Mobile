@@ -6,6 +6,7 @@ import UpdateJobResponse
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.pssmobile.data.model.AddSiteRequest
 import com.example.pssmobile.repository.ZohoRepository
 import com.example.pssmobile.retrofit.Resource
 import com.example.pssmobile.ui.login.base.BaseViewModel
@@ -30,6 +31,16 @@ class ZohoViewModel(private val repository: ZohoRepository) : BaseViewModel(repo
     fun updateDailyRunsheetJob(updateJobRequestModel: UpdateJobRequestModel) = viewModelScope.launch {
         _updateJobResponse.value = repository.updateDailyRunsheetJob(updateJobRequestModel)
     }
+
+    /*private val _addSiteResponse : MutableLiveData<Resource<UpdateJobResponse>> = MutableLiveData()
+    val addSiteResponse : LiveData<Resource<UpdateJobResponse>>
+        get() = _updateJobResponse
+
+    fun addSiteDetails(addSiteRequest: AddSiteRequest) = viewModelScope.launch {
+        _updateJobResponse.value = repository.addSite(addSiteRequest)
+    }*/
+
+
     /*suspend fun saveZohoAuthToken(zohotoken: String) {
         repository.saveZohoAuthToken(zohotoken)
     }*/

@@ -34,8 +34,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Bureau"
-                />
+                android:text="Bureau" />
 
             <Spinner
                 android:id="@+id/sp_bureau"
@@ -66,9 +65,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
                 android:hint="Site Name"
-                android:inputType="none" />
+                android:inputType="text"
+               />
 
 <!--            site address-->
             <TextView
@@ -81,7 +80,7 @@
                 android:text="Site Address"
                 android:textColor="?android:textColorHint" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/et_site_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +88,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
                 android:hint="Site Address"
                 android:inputType="none" />
 
@@ -112,7 +110,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                android:singleLine="true"
                 android:hint="Subrub"
                 android:inputType="none" />
 
@@ -136,11 +134,13 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Post Code"
-                android:inputType="none" />
+                android:inputType="number" />
 
-<!--            reason for double entry-->
+<!--
+&lt;!&ndash;            reason for double entry&ndash;&gt;
+
             <TextView
                 style="@style/TextLabelDefault"
                 android:layout_width="wrap_content"
@@ -159,11 +159,11 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Reason for double entry"
                 android:inputType="none" />
 
-<!--            authorized by-->
+&lt;!&ndash;            authorized by&ndash;&gt;
             <TextView
                 style="@style/TextLabelDefault"
                 android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Authorized by"
                 android:inputType="none" />
 
@@ -217,10 +217,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"/>
+                -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"/>
+
 
 <!--            contact person 1 details-->
             <androidx.appcompat.widget.AppCompatTextView
@@ -278,9 +280,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Contact No."
-                android:inputType="none" />
+                android:inputType="number" />
 
             <TextView
                 style="@style/TextLabelDefault"
@@ -300,12 +302,12 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Email Id"
-                android:inputType="none" />
+                android:inputType="textEmailAddress" />
 
 
-            <!--            contact person 2 details-->
+          <!--  &lt;!&ndash;            contact person 2 details&ndash;&gt;
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -361,7 +363,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Contact No."
                 android:inputType="none" />
 
@@ -383,11 +385,11 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Email Id"
                 android:inputType="none" />
 
-            <!--            contact person 3 details-->
+            &lt;!&ndash;            contact person 3 details&ndash;&gt;
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -443,7 +445,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Contact No."
                 android:inputType="none" />
 
@@ -465,12 +467,12 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Email Id"
                 android:inputType="none" />
 
 
-            <!--            contact person 4 details-->
+            &lt;!&ndash;            contact person 4 details&ndash;&gt;
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -526,7 +528,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Contact No."
                 android:inputType="none" />
 
@@ -548,10 +550,10 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Email Id"
                 android:inputType="none" />
-
+-->
 <!--            ABLOUT THE SITE-->
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -591,6 +593,7 @@
                 android:layout_marginStart="24dp">
 
                 <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_alarm_response"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -600,6 +603,7 @@
                     android:text="Alarm Response" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_random_petrols"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -609,6 +613,7 @@
                     android:text="Random Patrols" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_car_clamp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -618,6 +623,7 @@
                     android:text="Car Clamp" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_static_guard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -627,6 +633,7 @@
                     android:text="Static Guard" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_i_guard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -636,6 +643,7 @@
                     android:text="iGuard" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_require_log_book"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -655,6 +663,7 @@
                 android:background="@color/black"/>
 
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_box_is_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -686,6 +695,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginStart="24dp">
+            <RadioGroup
+                android:id="@+id/radio_group_invoice_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -713,6 +726,8 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="Not to be billed"/>
+
+            </RadioGroup>
         </LinearLayout>
 
 <!--            site briefing-->
@@ -734,7 +749,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
                 android:hint="https://"
                 android:inputType="none" />
 
@@ -758,7 +772,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
                 android:hint="Keys Held"
                 android:inputType="none" />
 
@@ -781,7 +794,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="PSS Key"
                 android:inputType="none" />
 
@@ -804,8 +817,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
-                android:hint="Site Reference"
+                
+                android:hint="Site ID"
                 android:inputType="none" />
 
 <!--            general notes-->
@@ -827,7 +840,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:maxLines="5"
                 android:hint="General Notes"
                 android:inputType="none" />
@@ -851,7 +864,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:maxLines="5"
                 android:hint="Operations Notes"
                 android:inputType="none" />
@@ -875,13 +888,14 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Car Clamp Info"
                 android:maxLines="5"
                 android:inputType="none" />
 
 
             <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cb_car_clamp_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -902,8 +916,33 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="80dp"
+                android:layout_marginBottom="20dp"
                 android:background="@color/black"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_file_path"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_file_path_upload"/>
+
+           <!-- <TextView
+                style="@style/TextLabelDefault"
+                android:id="@+id/tv_file_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="File Path"
+                android:textColor="?android:textColorHint" />-->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_browse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Add New"/>
 
 <!--            latitde-->
             <TextView
@@ -924,7 +963,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
                 android:hint="Latitude"
                 android:inputType="none" />
 
@@ -947,7 +985,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
                 android:hint="Longitude"
                 android:inputType="none" />
 
@@ -970,9 +1007,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="###########"
-                android:inputType="none" />
+                android:inputType="number" />
 
 <!--            mobile petrol rate-->
             <TextView
@@ -993,9 +1030,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Mobile Petrol rate"
-                android:inputType="none" />
+                android:inputType="number" />
 
 <!--            Additional time after 30 min-->
             <TextView
@@ -1016,9 +1053,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:focusable="false"
+                
                 android:hint="Additional Time"
-                android:inputType="none" />
+                android:inputType="number" />
 
 <!--            button layout-->
             <LinearLayout

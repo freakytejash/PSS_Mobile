@@ -4,6 +4,7 @@ import RunsheetModel
 import UpdateJobRequestModel
 import UpdateJobResponse
 import com.example.pssmobile.data.model.AddEditUserResponse
+import com.example.pssmobile.data.model.AddSiteRequest
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.*
@@ -19,4 +20,7 @@ interface ZohoApi {
     suspend fun updateJob(
             @Body body: UpdateJobRequestModel
     ): UpdateJobResponse
+
+    @POST("Site/AddSite")
+    suspend fun addSiteData(@Body body: AddSiteRequest):UpdateJobResponse
 }

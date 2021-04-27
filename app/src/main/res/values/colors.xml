@@ -16,7 +16,7 @@
     <color name="colorTextDefault">#131313</color>
     <color name="colorTextLabelDefault">#353535</color>
     <color name="colorTextHintDefault">#434343</color>
-
+    <color name="color_transparent">#00FFFFFF</color>
     <color name="colorTextWhite">#F3F3F3</color>
 
 </resources>

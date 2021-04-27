@@ -1,6 +1,7 @@
 package com.example.pssmobile.repository
 
 import UpdateJobRequestModel
+import com.example.pssmobile.data.model.AddSiteRequest
 import com.example.pssmobile.retrofit.ZohoApi
 
 class ZohoRepository(private val api: ZohoApi) : BaseRepository() {
@@ -14,5 +15,9 @@ class ZohoRepository(private val api: ZohoApi) : BaseRepository() {
     }*/
     suspend fun updateDailyRunsheetJob(updateJobRequestModel: UpdateJobRequestModel) = safeApiCall {
         api.updateJob(updateJobRequestModel)
+    }
+
+    suspend fun addSite(addSiteRequest: AddSiteRequest) = safeApiCall {
+        api.addSiteData(addSiteRequest)
     }
 }
