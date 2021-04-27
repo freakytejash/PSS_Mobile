@@ -4,6 +4,10 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            // Used for downloading dependency com.github.lkorth:device-automator
+            url "https://jitpack.io"
+        }
         mavenCentral()
     }
     dependencies {
@@ -20,6 +24,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
