@@ -102,7 +102,7 @@ public class LocationList extends AppCompatActivity {
 
          if (item.getItemId() == R.id.action_add)
         {
-          Intent intent = new Intent(LocationList.this, AddSiteActivity.class);
+          Intent intent = new Intent(LocationList.this, AddCheckPointActivity.class);
           startActivity(intent);
         }
          else if (item.getItemId() != 16908332) {

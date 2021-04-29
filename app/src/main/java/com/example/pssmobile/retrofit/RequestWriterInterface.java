@@ -1,7 +1,9 @@
 package com.example.pssmobile.retrofit;
 
+import com.example.pssmobile.data.model.AddCheckpointRequest;
 import com.example.pssmobile.data.model.AddSiteRequest;
 import com.example.pssmobile.data.model.BureauListResponse;
+import com.example.pssmobile.data.model.SiteCheckpointResponse;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -16,4 +18,12 @@ public interface RequestWriterInterface {
 
     @GET("api/Site/GetBureauList")
     Call<BureauListResponse> getBureauList();
+
+
+    @GET("api/Checkpoint/GetSiteList")
+    Call<SiteCheckpointResponse> getSiteCheckpointList();
+
+    @POST("api/Checkpoint/AddCheckpoint")
+    Call<ResponseBody> addCheckpoint(@Body AddCheckpointRequest request);
+
 }
