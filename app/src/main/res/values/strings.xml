@@ -32,8 +32,7 @@
     <string name="Hint_Bureau">Bureau</string>
     <string name="Hint_CheckpointDes">Checkpoint Description</string>
     <string name="add_user">Add User</string>
-    <string name="allowed_additional_file_formats_txt">File Formats Allowed: *.jpeg, *.jpg, *.png,  *.pdf, *.doc (Maximum size: 5MB)</string>
-    <string name="api_key">changeme</string>
+    <string name="allowed_additional_file_formats_txt">File Formats Allowed: .jpeg, .jpg, .png,  .pdf, *.doc (Maximum size: 5MB)</string>
 
     <string-array name="jobResults_array">
         <item>Nothing to report - all good</item>

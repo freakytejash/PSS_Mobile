@@ -3,14 +3,12 @@ package com.example.pssmobile.retrofit;
 
 
 import com.example.pssmobile.data.model.AddSiteRequest;
-import com.example.pssmobile.data.model.BureauListResponse;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface RequestInterface {
@@ -31,9 +29,6 @@ public interface RequestInterface {
     @POST("/api/accountsperthsecurityservices/json/mobileapp/form/Scan_Checkpoints/record/add?authtoken=26e6d588c42d569d93fcb35917e5ce7f&scope=creatorap")
     Call<ResponseBody> insertData(@Field("Scan_Checkpoint1") String str, @Field("IMEI") String str2, @Field("Checkpoint_Name") String job);
 
-  /*  @POST("api/Site/AddSite")
-    Call<ResponseBody> addSite(@Body AddSiteRequest request);
-
-    @GET("api/Site/GetBureauList")
-    Call<BureauListResponse> getBureauList();*/
+    @POST("Site/AddSite")
+    Call<ResponseBody> addSite(@Body AddSiteRequest addSiteRequest);
 }

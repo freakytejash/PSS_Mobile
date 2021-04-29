@@ -7,11 +7,9 @@ public class ApiClient {
 
 
     public static final String BASE_URL = "https://creator.zoho.com";
-    private static final String BASE_URL_WRITER ="http://103.255.190.131/PSSApp/";
-    private static RequestInterface loadInterface=null;
+    public static final String BASE_URL_2 = "http://103.255.190.131/PSSApp/api/";
     private static Retrofit retrofit = null;
-    private static Retrofit retrofitWriter = null;
-
+    private static Retrofit retrofit2 = null;
 
     public static Retrofit getClient() {
         if (retrofit==null) {
@@ -23,20 +21,13 @@ public class ApiClient {
         return retrofit;
     }
 
-    public static Retrofit getWriter() {
-        if (retrofitWriter == null) {
-            retrofitWriter = new Retrofit.Builder()
-                    .baseUrl(BASE_URL_WRITER)
+    public static Retrofit getAddSiteClient() {
+        if (retrofit2==null) {
+            retrofit2 = new Retrofit.Builder()
+                    .baseUrl(BASE_URL_2)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofitWriter;
+        return retrofit2;
     }
-
-   /* public static RequestInterface loadInterface(){
-        if (loadInterface ==null){
-            loadInterface = ApiClient.getWriter().create(RequestInterface.class);
-        }
-        return loadInterface;
-    }*/
 }
