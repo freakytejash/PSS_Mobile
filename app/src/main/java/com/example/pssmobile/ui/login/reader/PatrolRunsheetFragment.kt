@@ -55,7 +55,7 @@ class PatrolRunsheetFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunshee
                     )
                     var listSize = dataList.size;
                     binding.tvJobCount.isVisible = true;
-                    binding.tvJobCount.setText("Count : "+ listSize + " Jobs")
+                    binding.tvJobCount.setText(" " +listSize + " Jobs")
                     dailyRunsheetAdapter = DailyRunsheetAdapter(mContext, dataList as ArrayList<Data>)
                     binding.rvRunsheetList.adapter = dailyRunsheetAdapter
                     binding.rvRunsheetList.setHasFixedSize(true)

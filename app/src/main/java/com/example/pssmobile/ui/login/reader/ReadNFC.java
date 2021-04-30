@@ -49,6 +49,7 @@ import com.example.pssmobile.Database.listDataActivity;
 import com.example.pssmobile.R;
 import com.example.pssmobile.retrofit.ApiClient;
 import com.example.pssmobile.retrofit.RequestInterface;
+import com.example.pssmobile.ui.login.auth.AuthActivity;
 import com.example.pssmobile.ui.login.writer.AddCheckPointActivity;
 import com.example.pssmobile.ui.login.writer.LocationList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -489,7 +490,7 @@ public class ReadNFC extends AppCompatActivity {
 
         RequestInterface apiCalling = ApiClient.getClient().create(RequestInterface.class);
 
-        Call<ResponseBody> call = apiCalling.insertDataKey(this.edt_name.getText().toString(), this.android_id);
+        Call<ResponseBody> call = apiCalling.insertDataKey(this.edt_name.getText().toString(), this.imei);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -696,7 +697,8 @@ public class ReadNFC extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.logout_nfc:
-                // do something
+                Intent intent1 = new Intent(ReadNFC.this, AuthActivity.class);
+                startActivity(intent1);
                 return true;
             default:
                 return super.onContextItemSelected(item);

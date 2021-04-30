@@ -13,7 +13,7 @@
             android:id="@+id/tv_job_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
             android:gravity="center_horizontal"
             android:text="Count : 29 Jobs"
             android:textSize="22sp"

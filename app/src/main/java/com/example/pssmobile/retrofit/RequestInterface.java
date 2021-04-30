@@ -29,6 +29,4 @@ public interface RequestInterface {
     @POST("/api/accountsperthsecurityservices/json/mobileapp/form/Scan_Checkpoints/record/add?authtoken=26e6d588c42d569d93fcb35917e5ce7f&scope=creatorap")
     Call<ResponseBody> insertData(@Field("Scan_Checkpoint1") String str, @Field("IMEI") String str2, @Field("Checkpoint_Name") String job);
 
-    @POST("Site/AddSite")
-    Call<ResponseBody> addSite(@Body AddSiteRequest addSiteRequest);
 }
