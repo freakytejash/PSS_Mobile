@@ -64,14 +64,14 @@ public class listDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_data);
 
         this.context = this;
-        /*@SuppressLint("WrongConstant") TelephonyManager telephonyManager = (TelephonyManager) getSystemService("phone");
+        @SuppressLint("WrongConstant") TelephonyManager telephonyManager = (TelephonyManager) getSystemService("phone");
         if (Build.VERSION.SDK_INT >= 26) {
             this.imei = telephonyManager.getImei();
         } else {
             this.imei = telephonyManager.getDeviceId();
-        }*/
-        android_id = Settings.Secure.getString(getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        }
+       /* android_id = Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID);*/
         this.listView = (ListView) findViewById(R.id.listview);
         this.mHelper = new DbHelper(this);
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -143,7 +143,7 @@ public class listDataActivity extends AppCompatActivity {
 
     /* access modifiers changed from: protected */
     public void onResume() {
-        if (isConnectingToInternet(this)) {
+        if (ReadNFC.isConnectingToInternet(this)) {
             this.Trigger = true;
         } else {
             this.Trigger = false;

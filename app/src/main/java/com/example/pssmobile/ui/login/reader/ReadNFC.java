@@ -23,6 +23,10 @@ import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -45,6 +49,8 @@ import com.example.pssmobile.Database.listDataActivity;
 import com.example.pssmobile.R;
 import com.example.pssmobile.retrofit.ApiClient;
 import com.example.pssmobile.retrofit.RequestInterface;
+import com.example.pssmobile.ui.login.writer.AddCheckPointActivity;
+import com.example.pssmobile.ui.login.writer.LocationList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -106,7 +112,7 @@ public class ReadNFC extends AppCompatActivity {
         return true;
     }
 
-    @SuppressLint("WrongConstant")
+   // @SuppressLint("WrongConstant")
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {
             boolean isGranted = true;
@@ -125,7 +131,7 @@ public class ReadNFC extends AppCompatActivity {
             if (isGranted) {
                 startApplication();
             } else {
-                Toast.makeText(this, "permission denied", 1).show();
+                Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -134,12 +140,12 @@ public class ReadNFC extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_PHONE_STATE"}, 1);
     }
 
-    @SuppressLint("MissingPermission")
+   @SuppressLint("MissingPermission")
     public void startApplication() {
-        //@SuppressLint("WrongConstant") TelephonyManager telephonyManager = (TelephonyManager) getSystemService("phone");
-        //this.imei = Build.VERSION.SDK_INT >= 26 ? telephonyManager.getImei() : telephonyManager.getDeviceId();
-        android_id = Settings.Secure.getString(getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        @SuppressLint("WrongConstant") TelephonyManager telephonyManager = (TelephonyManager) getSystemService("phone");
+        this.imei = Build.VERSION.SDK_INT >= 26 ? telephonyManager.getImei() : telephonyManager.getDeviceId();
+     /*   android_id = Settings.Secure.getString(getContentResolver(),
+                Settings.Secure.ANDROID_ID);*/
     }
 
 
@@ -171,8 +177,8 @@ public class ReadNFC extends AppCompatActivity {
         this.Internet_validation = (TextView) findViewById(R.id.InternetValidation);
         this.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //ReadNFC.this.startActivity(new Intent(ReadNFC.this, listDataActivity.class));
-                ReadNFC.this.startActivity(new Intent(ReadNFC.this, ScanNfcTagActivity.class));
+                ReadNFC.this.startActivity(new Intent(ReadNFC.this, listDataActivity.class));
+               // ReadNFC.this.startActivity(new Intent(ReadNFC.this, ScanNfcTagActivity.class));
             }
         });
         this.edt_name.addTextChangedListener(new TextWatcher() {
@@ -215,8 +221,17 @@ public class ReadNFC extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_read_nfc, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
     public static boolean isConnectingToInternet(Context context2) {
-        @SuppressLint("WrongConstant") ConnectivityManager connectivity = (ConnectivityManager) context2.getSystemService("connectivity");
+        @SuppressLint("WrongConstant")
+        ConnectivityManager connectivity = (ConnectivityManager) context2.getSystemService("connectivity");
         if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null) {
@@ -640,7 +655,7 @@ public class ReadNFC extends AppCompatActivity {
 
         RequestInterface apiCalling = ApiClient.getClient().create(RequestInterface.class);
 
-        Call<ResponseBody> call = apiCalling.insertData(this.edt_name.getText().toString(), this.android_id, edtchckName);
+        Call<ResponseBody> call = apiCalling.insertData(this.edt_name.getText().toString(), this.imei, edtchckName);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -664,5 +679,27 @@ public class ReadNFC extends AppCompatActivity {
                 Toast.makeText(ReadNFC.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+   /* @Override
+    public void onCreateOptionsMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_read_nfc, menu);
+    }*/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.reader_list_nfc:
+                Intent intent = new Intent(ReadNFC.this, ScanNfcTagActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.logout_nfc:
+                // do something
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }

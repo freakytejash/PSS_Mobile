@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import java.util.ArrayList
 class PatrolRunsheetFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunsheetBinding, ZohoRepository>() {
     private lateinit var mContext: Context
     private lateinit var dailyRunsheetAdapter: DailyRunsheetAdapter
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -51,6 +53,9 @@ class PatrolRunsheetFragment : BaseFragment<ZohoViewModel, FragmentPatrolRunshee
                                     DividerItemDecoration.VERTICAL
                             )
                     )
+                    var listSize = dataList.size;
+                    binding.tvJobCount.isVisible = true;
+                    binding.tvJobCount.setText("Count : "+ listSize + " Jobs")
                     dailyRunsheetAdapter = DailyRunsheetAdapter(mContext, dataList as ArrayList<Data>)
                     binding.rvRunsheetList.adapter = dailyRunsheetAdapter
                     binding.rvRunsheetList.setHasFixedSize(true)

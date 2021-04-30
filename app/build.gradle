@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.example.pssmobile"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 28
         multiDexEnabled true
         versionCode 1
         versionName "1.0"

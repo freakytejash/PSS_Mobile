@@ -5,6 +5,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.reader.PatrolRunsheetFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+        <TextView
+            android:id="@+id/tv_job_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="Count : 29 Jobs"
+            android:textSize="22sp"
+            android:layout_margin="20dp"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:background="@color/colorPrimaryDark" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_runsheetList"
+            android:layout_below="@+id/tv_job_count"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="match_parent"
@@ -12,8 +37,5 @@
         android:layout_marginTop="16dp"
         android:visibility="gone"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_runsheetList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
 </FrameLayout>

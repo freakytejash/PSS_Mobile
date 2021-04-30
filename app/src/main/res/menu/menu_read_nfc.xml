@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/add_site"
-        android:title="Add Site" />
-    <item android:id="@+id/logout"
+    <item android:id="@+id/reader_list_nfc"
+        android:title="Reader List" />
+    <item android:id="@+id/logout_nfc"
         android:title="Logout"/>
 
 </menu>
