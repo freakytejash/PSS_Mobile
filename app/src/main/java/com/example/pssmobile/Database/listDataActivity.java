@@ -11,7 +11,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,8 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pssmobile.R;
 import com.example.pssmobile.adapter.DisplayAdapter;
-import com.example.pssmobile.retrofit.ApiClient;
-import com.example.pssmobile.retrofit.RequestInterface;
+import com.example.pssmobile.helper.ApiClient;
+import com.example.pssmobile.helper.RequestInterface;
 import com.example.pssmobile.ui.login.reader.ReadNFC;
 
 import org.json.JSONException;

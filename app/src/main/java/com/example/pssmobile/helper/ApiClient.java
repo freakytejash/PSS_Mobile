@@ -1,4 +1,4 @@
-package com.example.pssmobile.retrofit;
+package com.example.pssmobile.helper;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -19,5 +19,4 @@ public class ApiClient {
         }
         return retrofit;
     }
-
 }

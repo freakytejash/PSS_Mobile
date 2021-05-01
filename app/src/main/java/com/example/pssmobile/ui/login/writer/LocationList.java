@@ -26,6 +26,7 @@ import com.example.pssmobile.data.model.Getters;
 import com.example.pssmobile.data.model.WriterResponse;
 import com.example.pssmobile.retrofit.WriterAPI;
 import com.example.pssmobile.ui.login.MainActivity;
+import com.example.pssmobile.ui.login.auth.AuthActivity;
 import com.example.pssmobile.ui.login.reader.ScanNfcFragment;
 import com.example.pssmobile.ui.login.reader.ScanNfcTagActivity;
 import com.example.pssmobile.ui.login.writer.adapter.ListAdapter;
@@ -100,11 +101,16 @@ public class LocationList extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-         if (item.getItemId() == R.id.action_add)
+         if (item.getItemId() == R.id.checkpoint_add_nfc)
         {
           Intent intent = new Intent(LocationList.this, AddCheckPointActivity.class);
           startActivity(intent);
         }
+         else if (item.getItemId() == R.id.logout_nfc_writer)
+         {
+             Intent intent = new Intent(LocationList.this, AuthActivity.class);
+             startActivity(intent);
+         }
          else if (item.getItemId() != 16908332) {
              return super.onOptionsItemSelected(item);
          }

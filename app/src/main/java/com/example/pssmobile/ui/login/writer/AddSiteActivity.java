@@ -1,16 +1,13 @@
 package com.example.pssmobile.ui.login.writer;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,8 +16,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,23 +28,16 @@ import android.util.Base64OutputStream;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pssmobile.R;
 import com.example.pssmobile.data.model.AddSiteRequest;
 import com.example.pssmobile.data.model.BureauListResponse;
 import com.example.pssmobile.databinding.ActivityAddSiteBinding;
-import com.example.pssmobile.retrofit.ApiClient;
 import com.example.pssmobile.retrofit.ApiClientWriter;
-import com.example.pssmobile.retrofit.RequestInterface;
-import com.example.pssmobile.ui.login.MainActivity;
-import com.example.pssmobile.ui.login.reader.ReadNFC;
 import com.example.pssmobile.ui.login.reader.ZohoViewModel;
 import com.example.pssmobile.ui.login.writer.adapter.AddFileDetailAdapter;
 import com.example.pssmobile.ui.login.writer.adapter.GeoCodeLocation;
@@ -57,32 +45,16 @@ import com.example.pssmobile.ui.login.writer.adapter.GeoCodeLocation;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Url;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class AddSiteActivity extends AppCompatActivity implements View.OnClickListener {
