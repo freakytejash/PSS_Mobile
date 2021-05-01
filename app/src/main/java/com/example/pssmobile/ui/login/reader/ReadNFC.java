@@ -90,7 +90,7 @@ public class ReadNFC extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     ImageView imageView;
     String imei = "";
-    String android_id = "";
+   // String android_id = "";
     boolean isUpdate;
     DbHelper mHelper;
     RequestQueue mQueu;
@@ -432,7 +432,6 @@ public class ReadNFC extends AppCompatActivity {
 
     /* access modifiers changed from: protected */
     public void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
         setIntent(intent);
         readFromIntent(intent);
         if ("android.nfc.action.TAG_DISCOVERED".equals(intent.getAction())) {
@@ -656,7 +655,7 @@ public class ReadNFC extends AppCompatActivity {
 
         RequestInterface apiCalling = ApiClient.getClient().create(RequestInterface.class);
 
-        Call<ResponseBody> call = apiCalling.insertData(this.edt_name.getText().toString(), this.imei, edtchckName);
+        Call<ResponseBody> call = apiCalling.insertData(ReadNFC.this.edt_name.getText().toString(), this.imei, edtchckName);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
